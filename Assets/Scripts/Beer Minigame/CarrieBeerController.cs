@@ -113,16 +113,4 @@ public class CarrierBeerController : MonoBehaviour
 
     }
     #endregion
-
-    #region triggers
-    void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("Colloding");
-        Debug.Log(other.tag);
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log("You Won!");
-        }
-    }
-    #endregion
 }

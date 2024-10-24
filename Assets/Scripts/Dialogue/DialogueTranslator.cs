@@ -4,14 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class DialogueManager : MonoBehaviour
+public class DialogueTranslator : MonoBehaviour
 {
-    public Text dialogueText;
+    private TextMeshProUGUI dialogueText;
     public float typingSpeed = 0.05f;
 
     private void Start()
     {
-        dialogueText.text = ""; // Clear text at start
+        dialogueText = GetComponentInChildren<TextMeshProUGUI>();
+        Debug.Log(dialogueText.text);
+        //dialogueText.text = ""; // Clear text at start
     }
 
     public void StartDialogue(string dialogue)
@@ -19,7 +21,7 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(TypeDialogue(dialogue));
     }
 
-    private IEnumerator TypeDialogue(string dialogue)
+    public IEnumerator TypeDialogue(string dialogue)
     {
         dialogueText.text = "";
         foreach (char letter in dialogue.ToCharArray())

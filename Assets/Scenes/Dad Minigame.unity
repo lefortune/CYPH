@@ -292,12 +292,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 145075118}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 960ed91650cc6415991bbea5aa06c654, type: 3}
+  m_Script: {fileID: 11500000, guid: 242ef9a3422b14cd5a69c897f8b659a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BEER: {fileID: 3428662606872626069, guid: 833b8348e429c4f629786301092db893, type: 3}
-  beerTime: 0.5
-  startTime: 1
+  BEER: {fileID: 0}
+  beerTime: 5
+  startTime: 5
 --- !u!4 &145075120
 Transform:
   m_ObjectHideFlags: 0
