@@ -1,47 +1,104 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using UnityEngine.TextCore.Text;
 
 public class DialogueGameManager : MonoBehaviour
 {
-    public GameObject Dialogue;
-    private int DialogueNum = 0;
-    private int DialogueCheck = -1;
-    public List<string> lines = new List<string>();
+    public List<DialogueCharacterManager> characters; // Reference to all characters on screen
 
-    // Use this for initialization
-    void Start()
+    private Dictionary<CharacterNames, DialogueCharacterManager> characterMap;
+    public GameObject dialogueText;
+    public GameObject speakerBox;
+    private DynamicPanel dynamicPanel;
+    private bool isDialogueActive = false;
+
+    void Awake()
     {
-        MakeLines();
+        characterMap = new Dictionary<CharacterNames, DialogueCharacterManager>();
+        dynamicPanel = speakerBox.GetComponent<DynamicPanel>();
     }
 
-    void MakeLines()
+    public void StartDialogueEvent(DialogueEvent dialogueEvent, List<GameObject> thisEventCharacters)
     {
-        lines.Add("The weather outside is rizzy, but the fire is so skibidi. And since I've gyatt to go, ohio ohio ohio.");
-        lines.Add("It's beginning to look a gyatt like rizzmass, everywhere online. My sigma level is maxxed, your food got fanum taxxed");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (DialogueNum != DialogueCheck)
-        {
-            DialogueCheck = DialogueNum;
-            StartCoroutine(StartDialogue(DialogueNum));
+        foreach (var c in thisEventCharacters) {
+            DialogueCharacterManager dcManagerComponent = c.GetComponent<DialogueCharacterManager>();
+            characters.Add(dcManagerComponent);
+            if (!characterMap.ContainsKey(dcManagerComponent.characterName))
+            {
+                Debug.Log("No duplicate character name, adding to map");
+                characterMap.Add(dcManagerComponent.characterName, dcManagerComponent);
+            }
+            else
+            {
+                Debug.LogWarning($"Duplicate character name detected: {dcManagerComponent.characterName}");
+            }
         }
-        //Dialogue.GetComponent<DialogueTranslator>().StartDialogue("The weather outside is rizzy, but the fire is so skibidi. And since I've gyatt to go, ohio ohio ohio.");
+        Debug.Log("Starting dialogue event");
+        StartCoroutine(DialogueRoutine(dialogueEvent));
     }
 
-    IEnumerator StartDialogue(int num)
+    IEnumerator DialogueRoutine(DialogueEvent dialogueEvent)
     {
-        yield return StartCoroutine(Dialogue.GetComponent<DialogueTranslator>().TypeDialogue(lines[num]));
-        MakeAnswerOptions();
-        //DialogueNum++;
+        foreach (var line in dialogueEvent.dialogueLines) {
+            DialogueCharacterManager character = GetCharacter(line.speaker);
+            
+            SetSpeaker(line.speaker);
+            if (line.expressionName != "none")
+            {
+                string expressionPath = $"Expressions/{line.expressionName}";
+                Sprite newExpression = Resources.Load<Sprite>(expressionPath);
+                if (newExpression != null) {
+                    character.ChangeExpression(newExpression);
+                }
+                else {
+                    Debug.LogWarning($"Could not find expression sprite at path: {expressionPath}");
+                }
+            }
+            if (line.actionName != "none")
+            {
+                character.DoAction(line.actionName);
+            }
+
+            Debug.Log("Starting line");
+            isDialogueActive = true;
+            dynamicPanel.UpdateUISpeaker(line.speaker, line.speakerLabel);
+            yield return StartCoroutine(dialogueText.GetComponent<DialogueTranslator>().TypeDialogue(line.text, line.speaker));
+            isDialogueActive = false;
+            MakeAnswerOptions();
+            yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+        }
     }
 
     void MakeAnswerOptions()
     {
-        
+        if (Input.GetMouseButtonDown(0)) {
+
+        }
     }
 
+    public void SetSpeaker(CharacterNames speaker)
+    {
+        foreach (var character in characters) {
+            if (speaker == character.characterName)
+            {
+                character.SetFocused();
+            }
+            else
+            {
+                character.SetUnfocused();
+            }
+        }
+    }
+
+    public DialogueCharacterManager GetCharacter(CharacterNames speaker)
+    {
+        if (characterMap.TryGetValue(speaker, out DialogueCharacterManager character))
+        {
+            return character;
+        }
+        return null;
+    }
+    
 }

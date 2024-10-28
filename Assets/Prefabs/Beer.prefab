@@ -99,8 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36918a32c225e4e83adb20baacb069c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beerSpeed: 20
-  beerRotationSpeed: 50
+  beerSpeed: 40
+  beerRotationSpeed: 0
 --- !u!50 &5617770349965405251
 Rigidbody2D:
   serializedVersion: 4

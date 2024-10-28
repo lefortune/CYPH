@@ -7,26 +7,25 @@ using TMPro;
 public class DialogueTranslator : MonoBehaviour
 {
     private TextMeshProUGUI dialogueText;
-    public float typingSpeed = 0.05f;
+    public float typingSpeed = 0.1f;
 
-    private void Start()
+    private void Awake()
     {
-        dialogueText = GetComponentInChildren<TextMeshProUGUI>();
-        Debug.Log(dialogueText.text);
-        //dialogueText.text = ""; // Clear text at start
+        dialogueText = GetComponent<TextMeshProUGUI>();
+        dialogueText.text = "";
     }
 
-    public void StartDialogue(string dialogue)
-    {
-        StartCoroutine(TypeDialogue(dialogue));
-    }
-
-    public IEnumerator TypeDialogue(string dialogue)
+    public IEnumerator TypeDialogue(string dialogue, CharacterNames speaker)
     {
         dialogueText.text = "";
         foreach (char letter in dialogue.ToCharArray())
         {
             dialogueText.text += letter;
+            if (letter != ' ') {
+                if (speaker == CharacterNames.Narrator) {
+                    FindObjectOfType<AudioManager>().Play("DialogueTyping");
+                }
+            }
             yield return new WaitForSeconds(typingSpeed);
         }
     }

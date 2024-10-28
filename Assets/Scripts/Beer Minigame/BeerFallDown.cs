@@ -23,14 +23,13 @@ public class BeerFallDown : MonoBehaviour
         backgroundScaleY = GameObject.Find("GameMap/Background").transform.localScale.y;
         lowerBound = backgroundPosY - backgroundScaleY / 2 - 5;
 
-        GetComponent<Rigidbody2D>().AddForce(Vector2.down * beerSpeed * 10);
+        GetComponent<Rigidbody2D>().AddForce(Vector2.down * Random.Range(0f, 1f) * beerSpeed * 10);
         GetComponent<Rigidbody2D>().AddTorque(Random.Range(-1f, 1f) * beerRotationSpeed);
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(transform.position.y);
         if (transform.position.y < lowerBound)
         {
             Destroy(gameObject);
