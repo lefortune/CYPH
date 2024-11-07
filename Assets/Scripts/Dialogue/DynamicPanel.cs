@@ -15,7 +15,8 @@ public class DynamicPanel : MonoBehaviour
         { CharacterNames.Carrie, Color.white },
         { CharacterNames.Brother, new Color(1285f/255f, 64/255f, 128f/255f) },  // Indigo
         { CharacterNames.Mother, new Color(64/255f, 128f/255f, 128/255f) },
-        { CharacterNames.Father, new Color(128f/255f, 64/255f, 64/255f) }    // Maroon
+        { CharacterNames.Father, new Color(128f/255f, 64/255f, 64/255f) },    // Maroon
+        { CharacterNames.Phone_Guy, new Color(135f/255f, 206f/255f, 235f/255f) }    // Sky Blue
     };
 
     void Awake()

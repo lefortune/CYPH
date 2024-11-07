@@ -13,6 +13,8 @@ public class DialogueGameManager : MonoBehaviour
     public GameObject dialogueBox;
     public GameObject speakerBox;
     private DynamicPanel dynamicPanel;
+    
+    GameObject[] taggedSpeakers;
     private bool isDialogueActive = false;
 
     void Awake()
@@ -22,15 +24,26 @@ public class DialogueGameManager : MonoBehaviour
 
         speakerBox.SetActive(false);
         dialogueBox.SetActive(false);
+
+        taggedSpeakers = GameObject.FindGameObjectsWithTag("Speaker");
+    }
+
+    void Start()
+    {
+
     }
 
     public void StartDialogueEvent(DialogueEvent dialogueEvent, List<GameObject> thisEventCharacters)
     {
         speakerBox.SetActive(true);
         dialogueBox.SetActive(true);
-        GameObject[] taggedSpeakers = GameObject.FindGameObjectsWithTag("Speaker");
         foreach (var s in taggedSpeakers) {
-            s.SetActive(thisEventCharacters.Contains(s));
+            Debug.Log(s + " " + thisEventCharacters.Contains(s));
+            if (thisEventCharacters.Contains(s)) {
+                s.GetComponent<DialogueCharacterManager>().Invisible(false);
+            } else {
+                s.GetComponent<DialogueCharacterManager>().Invisible(true);
+            }
         }
 
         characters.Clear();
@@ -42,7 +55,27 @@ public class DialogueGameManager : MonoBehaviour
             {
                 characterMap.Add(dcManagerComponent.characterName, dcManagerComponent);
             }
+
+            if (dcManagerComponent.characterName == CharacterNames.Carrie)
+            {
+                dcManagerComponent.DoAction("fadein");
+            }
         }
+
+        // Initial Expressions
+        foreach (var initExpr in dialogueEvent.initialExpressions)
+        {
+            foreach (var characterObj in thisEventCharacters)
+            {
+                DialogueCharacterManager characterManager = characterObj.GetComponent<DialogueCharacterManager>();
+                if (characterManager.characterName == initExpr.character)
+                {
+                    characterManager.ChangeExpression(Resources.Load<Sprite>($"Expressions/{characterManager.characterName}/{initExpr.expressionName}"));
+                    break;
+                }
+            }
+        }
+
         Debug.Log("Starting dialogue event");
         StartCoroutine(DialogueRoutine(dialogueEvent));
     }
@@ -59,7 +92,7 @@ public class DialogueGameManager : MonoBehaviour
             SetSpeaker(line.speaker);
             if (line.expressionName != "none")
             {
-                string expressionPath = $"Sprites/Carrie/Expressions/{line.expressionName}";
+                string expressionPath = $"Expressions/{line.speaker}/{line.expressionName}";
                 Sprite newExpression = Resources.Load<Sprite>(expressionPath);
                 if (newExpression != null) {
                     character.ChangeExpression(newExpression);
@@ -72,6 +105,10 @@ public class DialogueGameManager : MonoBehaviour
             {
                 character.DoAction(line.actionName);
             }
+            if (line.soundName != "none")
+            {
+                FindAnyObjectByType<AudioManager>().Play(line.soundName);
+            }
 
             Debug.Log("Starting line");
             isDialogueActive = true;
@@ -79,7 +116,13 @@ public class DialogueGameManager : MonoBehaviour
             yield return StartCoroutine(dialogueText.GetComponent<DialogueTranslator>().TypeDialogue(line.text, line.speaker));
             
             isDialogueActive = false;
+            if (line.autoSkip)
+            {
+                currLineIndex++;
+                continue;
+            }
             yield return new WaitForSeconds(0.5f);
+
             if (line.hasAnswer)
             {
                 yield return StartCoroutine(ShowDialogueOptions(line.answers));
@@ -92,13 +135,18 @@ public class DialogueGameManager : MonoBehaviour
 
             if (line.isFinal)
             {
-                currLineIndex = 0;
+                break;
             } else {
                 currLineIndex += line.skipLines > 0 ? line.skipLines : 1;
             }
         }
         dialogueBox.SetActive(false);
         speakerBox.SetActive(false);
+        foreach (var s in taggedSpeakers) {
+            s.GetComponent<DialogueCharacterManager>().Invisible(true);
+        }
+        CutsceneStarter.inEvent = false;
+        CutsceneStarter.cutsceneNum++;
     }
 
     IEnumerator ShowDialogueOptions(List<DialogueOption> options)

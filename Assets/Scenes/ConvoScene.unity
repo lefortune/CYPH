@@ -393,7 +393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: 1
-  characterSprite: {fileID: 0}
+  characterImage: {fileID: 0}
   focusedScale: {x: 1, y: 1, z: 1}
   unfocusedScale: {x: 0.9, y: 0.9, z: 0.9}
   angryExpressionPrefab: {fileID: 0}
@@ -443,6 +443,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characters: []
   dialogueText: {fileID: 841076667}
+  dialogueBox: {fileID: 1145969038}
   speakerBox: {fileID: 1877335070}
 --- !u!1 &681898640
 GameObject:
@@ -599,7 +600,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 485f85b0b4d68427cb64eab6fd77c2e4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 025b48788ca0e4303811582e0967b2c0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -619,8 +620,8 @@ Transform:
   m_GameObject: {fileID: 766241759}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -638,7 +639,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: 0
-  characterSprite: {fileID: 0}
+  characterImage: {fileID: 0}
   focusedScale: {x: 1, y: 1, z: 1}
   unfocusedScale: {x: 0.9, y: 0.9, z: 0.9}
   angryExpressionPrefab: {fileID: 0}
@@ -672,8 +673,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5018afe731c2422789a4909cb967fdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterName: 4
-  characterSprite: {fileID: 0}
+  characterName: 5
+  characterImage: {fileID: 0}
   focusedScale: {x: 1, y: 1, z: 1}
   unfocusedScale: {x: 0.9, y: 0.9, z: 0.9}
   angryExpressionPrefab: {fileID: 0}
@@ -924,7 +925,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: 1
-  characterSprite: {fileID: 0}
+  characterImage: {fileID: 0}
   focusedScale: {x: 1, y: 1, z: 1}
   unfocusedScale: {x: 0.9, y: 0.9, z: 0.9}
   angryExpressionPrefab: {fileID: 0}
@@ -1396,6 +1397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueEvent:
     dialogueLines: []
+    initialExpressions: []
 --- !u!1 &1877335070
 GameObject:
   m_ObjectHideFlags: 0
