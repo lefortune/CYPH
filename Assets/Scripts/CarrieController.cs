@@ -14,17 +14,24 @@ public class CarrieController : MonoBehaviour
 
     #region Physics_components
     Rigidbody2D PlayerRB;
-    Vector2 currDirection;
+    BoxCollider2D PlayerColl;
+    public Vector2 currDirection;
     #endregion
 
     #region Animation_components
     Animator anim;
     #endregion
 
+    #region Other_variables
+    public InteractablesManager interactablesManager;
+    #endregion
+
     #region Unity_functions
     private void Awake() {
         PlayerRB = GetComponent<Rigidbody2D>();
+        PlayerColl = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
+        interactablesManager = FindAnyObjectByType<InteractablesManager>();
     }
     
     private void Update() {
@@ -36,11 +43,15 @@ public class CarrieController : MonoBehaviour
         } else {
             isSprint = false;
         }
-        Move();
+        if (!interactablesManager.isInteractionActive)
+        {
+            Move();
+        }
 
-        if (Input.GetKeyDown(KeyCode.F)) {
+        if (Input.GetKeyDown(KeyCode.F) && !interactablesManager.isInteractionActive) {
             Interact();
         }
+
     }
     #endregion
 
@@ -52,6 +63,9 @@ public class CarrieController : MonoBehaviour
         PlayerRB.velocity = movement;
         if (isSprint) {
             PlayerRB.velocity *= 2;
+            anim.speed = 2;
+        } else {
+            anim.speed = 1;
         }
 
         if (movement != Vector2.zero)
@@ -78,14 +92,27 @@ public class CarrieController : MonoBehaviour
     #region Interact_functions
     private void Interact()
     {
-        RaycastHit2D[] hits = Physics2D.BoxCastAll(PlayerRB.position + currDirection, new Vector2(0.5f, 0.5f), 0f, Vector2.zero, 0f);
+        Vector2 colliderCenter = PlayerColl.bounds.center;
+        Vector2 colliderSize = PlayerColl.bounds.size;
+
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(
+            colliderCenter + currDirection/2, new Vector2(colliderSize.x/2, colliderSize.y/2), 0f, Vector2.zero, 0f
+            );
+        float closestDistance = float.MaxValue;
+        RaycastHit2D closestHit = new RaycastHit2D();
+
         foreach(RaycastHit2D hit in hits) {
-            if (hit.transform.CompareTag("Chest")) {
-//                hit.transform.GetComponent<Chest>().Open();
+            if (hit.transform.CompareTag("Interactable")) {
+                float distance = Vector2.Distance(colliderCenter + currDirection/2, hit.point);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestHit = hit;
+                }
+                closestHit.transform.GetComponent<BackgroundInteractables>().Interact();
             }
         }
     }
-
 
     #endregion
 }
