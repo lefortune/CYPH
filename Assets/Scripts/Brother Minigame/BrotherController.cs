@@ -44,7 +44,7 @@ public class BrotherController : MonoBehaviour
         {
             isRunning = false;
         }
-        else if (brotherRB.position.x - carrieRB.position.x > 20 && touchingGround)
+        else if (brotherRB.position.x - carrieRB.position.x > 12 && touchingGround)
         {
             Stop();
             isRunning = false;
@@ -55,7 +55,7 @@ public class BrotherController : MonoBehaviour
         }
 
 
-        if (brotherRB.position.x - carrieRB.position.x > 10)
+        if (brotherRB.position.x - carrieRB.position.x > 7)
         {
             runSpeed = 4;
         }
