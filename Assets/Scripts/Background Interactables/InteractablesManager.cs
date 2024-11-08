@@ -60,7 +60,15 @@ public class InteractablesManager : MonoBehaviour
     {
         interactableTexts.interactableLines = new List<InteractableTextLine>
         {
-            LineBuilder("This couch is really big! \nI've fallen asleep here a couple of times, waiting for my next client.", true)
+            LineBuilder("So glad the seraphim let me get my own couch in my favorite color. It's so big and cozy! \nI've fallen asleep here a couple of times, waiting for my next client.", true)
+        };
+        StartCoroutine(InteractTextRoutine(interactableTexts));
+    }
+    public void InteractPhone()
+    {
+        interactableTexts.interactableLines = new List<InteractableTextLine>
+        {
+            LineBuilder("A pretty old-fashioned phone that I can't call anyone on. This is where I get my orders from the seraphim!", true)
         };
         StartCoroutine(InteractTextRoutine(interactableTexts));
     }

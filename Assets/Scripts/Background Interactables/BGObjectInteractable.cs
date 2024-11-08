@@ -29,5 +29,14 @@ public class BackgroundInteractables : MonoBehaviour
         {
             FindAnyObjectByType<AudioManager>().Play("Josh");
         }
+        if (objName == "BGPhone")
+        {
+            if (CutsceneStarter.cutsceneNum == 1) {
+                FindAnyObjectByType<CutsceneStarter>().IntroCutscenePt2Start();
+            } else {
+                FindAnyObjectByType<InteractablesManager>().InteractPhone();
+            }
+        }
+
     }
 }

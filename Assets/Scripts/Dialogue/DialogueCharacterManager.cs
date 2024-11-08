@@ -6,11 +6,11 @@ using System.Collections.Generic;
 public class DialogueCharacterManager : MonoBehaviour
 {
     public CharacterNames characterName;
-    public SpriteRenderer characterSprite;
+    public SpriteRenderer characterImage;
     public Vector3 focusedScale;
     public Vector3 unfocusedScale;
     private Color focusedColor = Color.white;
-    private Color unfocusedColor = Color.grey;
+    private Color unfocusedColor;
     private static float transitionDuration = 0.3f;
 
     private Vector3 targetScale;
@@ -18,17 +18,21 @@ public class DialogueCharacterManager : MonoBehaviour
 
     public GameObject angryExpressionPrefab;
 
-    private void Start()
+    private void Awake()
     {
         focusedScale = transform.localScale;
         unfocusedScale = focusedScale * 0.9f;
 
-        characterSprite = GetComponent<SpriteRenderer>();
-        if (characterSprite == null) {
+        characterImage = GetComponent<SpriteRenderer>();
+
+        if (characterImage == null) {
             Debug.LogError($"SpriteRenderer not found on the GameObject named {characterName}");
         }
 
-        SetUnfocused();
+    }
+
+    private void Start()
+    {
     }
 
     public void SetFocused()
@@ -42,6 +46,9 @@ public class DialogueCharacterManager : MonoBehaviour
     public void SetUnfocused()
     {
         if (characterName == CharacterNames.Narrator) return;
+        Color originalColor = characterImage.color;
+        unfocusedColor = new Color(0.5f, 0.5f, 0.5f, originalColor.a);
+        Debug.Log(unfocusedColor);
         targetScale = unfocusedScale;
         targetColor = unfocusedColor;
         StartCoroutine(Transition());
@@ -51,24 +58,24 @@ public class DialogueCharacterManager : MonoBehaviour
     {
         float elapsedTime = 0f;
         Vector3 startScale = transform.localScale;
-        Color startColor = characterSprite.color;
+        Color startColor = characterImage.color;
 
         while (elapsedTime < transitionDuration)
         {
             transform.localScale = Vector3.Lerp(startScale, targetScale, elapsedTime / transitionDuration);
-            characterSprite.color = Color.Lerp(startColor, targetColor, elapsedTime / transitionDuration);
+            characterImage.color = Color.Lerp(startColor, targetColor, elapsedTime / transitionDuration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
         transform.localScale = targetScale;
-        characterSprite.color = targetColor;
+        characterImage.color = targetColor;
     }
 
     public void ChangeExpression(Sprite expression)
     {
         if (characterName == CharacterNames.Narrator) return;
-        characterSprite.sprite = expression;
+        characterImage.sprite = expression;
     }
 
     public void DoAction(string action)
@@ -89,6 +96,10 @@ public class DialogueCharacterManager : MonoBehaviour
         {
             StartCoroutine(AngryCoroutine(gameObject));
         }
+        else if (action.Contains("fadein")) 
+        {
+            StartCoroutine(FadeCoroutine(-2f, 0f, true));
+        }
         //  Handle other actions (oscillation, animation) if u want
         else {
             Debug.Log("Unknown action, check your dialogue event");
@@ -97,24 +108,30 @@ public class DialogueCharacterManager : MonoBehaviour
     }
 
     #region Actions
-    private IEnumerator FadeInCoroutine(Vector3 targetPosition, float endAlpha, float duration)
+    private IEnumerator FadeCoroutine(float startX, float targetX, bool fromLeft)
     {
         float elapsedTime = 0f;
-        Vector3 initialPosition = transform.localPosition;
-        Color initialColor = characterSprite.color;
+        float duration = 0.3f;
+        Color initialColor = characterImage.color;
+        initialColor.a = 0f;
+        Vector3 currentPosition = transform.localPosition;
+        currentPosition.x = startX;
+        transform.localPosition = currentPosition;
+        characterImage.color = initialColor;
 
         while (elapsedTime < duration)
         {
             float progress = elapsedTime / duration;
-            transform.localPosition = Vector3.Lerp(initialPosition, targetPosition, progress);
-            characterSprite.color = new Color(initialColor.r, initialColor.g, initialColor.b, Mathf.Lerp(initialColor.a, endAlpha, progress));
+            currentPosition.x = Mathf.Lerp(startX, targetX, progress);
+            transform.localPosition = currentPosition;
+            characterImage.color = new Color(initialColor.r, initialColor.g, initialColor.b, Mathf.Lerp(0f, 1f, progress));
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        // Ensure final position and color are set
-        transform.localPosition = targetPosition;
-        characterSprite.color = new Color(initialColor.r, initialColor.g, initialColor.b, endAlpha);
+        currentPosition.x = targetX;
+        transform.localPosition = currentPosition;
+        characterImage.color = new Color(initialColor.r, initialColor.g, initialColor.b, 1f);
     }
 
     private IEnumerator ShakeCoroutine()
@@ -170,4 +187,11 @@ public class DialogueCharacterManager : MonoBehaviour
         yield return null;
     }
     #endregion
+
+    public void Invisible(bool tf) {
+        Color a = characterImage.color;
+        a.a = tf ? 0f : 1f;
+        characterImage.color = a;
+    }
+
 }

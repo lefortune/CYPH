@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class CarrieController : MonoBehaviour
 {
     #region Movement_variables
-    float moveSpeed = 3;
+    float moveSpeed = 0.05f;
     float x_input;
     float y_input;
     bool isSprint = false;
@@ -43,13 +43,12 @@ public class CarrieController : MonoBehaviour
         } else {
             isSprint = false;
         }
-        if (!interactablesManager.isInteractionActive)
+        if (!interactablesManager.isInteractionActive && !CutsceneStarter.inEvent)
         {
             Move();
-        }
-
-        if (Input.GetKeyDown(KeyCode.F) && !interactablesManager.isInteractionActive) {
-            Interact();
+            if (Input.GetKeyDown(KeyCode.F)) {
+                Interact();
+            }
         }
 
     }
@@ -58,13 +57,13 @@ public class CarrieController : MonoBehaviour
     #region Movement_functions
     private void Move()
     {
-
         Vector2 movement = new Vector2(x_input, y_input) * moveSpeed;
-        PlayerRB.velocity = movement;
+        PlayerRB.MovePosition(PlayerRB.position + movement);
         if (isSprint) {
-            PlayerRB.velocity *= 2;
+            moveSpeed = 0.1f;
             anim.speed = 2;
         } else {
+            moveSpeed = 0.05f;
             anim.speed = 1;
         }
 
@@ -85,7 +84,6 @@ public class CarrieController : MonoBehaviour
 
         anim.SetFloat("DirX", currDirection.x);
         anim.SetFloat("DirY", currDirection.y);
-
     }
     #endregion
 
