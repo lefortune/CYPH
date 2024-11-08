@@ -55,11 +55,11 @@ public class BrotherController : MonoBehaviour
         }
 
 
-        if (brotherRB.position.x - carrieRB.position.x > 10 || brotherRB.position.x >= 100)
+        if (brotherRB.position.x - carrieRB.position.x > 10)
         {
             runSpeed = 4;
         }
-        else if (brotherRB.position.x - carrieRB.position.x < 5)
+        else if (brotherRB.position.x - carrieRB.position.x < 5 || brotherRB.position.x >= 100)
         {
             runSpeed = 6;
         }
