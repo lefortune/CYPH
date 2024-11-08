@@ -17,7 +17,7 @@ public class DialogueTranslator : MonoBehaviour
         dialogueText.text = "";
     }
 
-    public IEnumerator TypeDialogue(string dialogue, CharacterNames speaker = CharacterNames.Narrator)
+    public IEnumerator TypeDialogue(string dialogue, CharacterNames speaker = CharacterNames.Narrator, bool autoSkip = false)
     {
         dialogueText.text = "";
         skipTyping = false;
@@ -37,7 +37,7 @@ public class DialogueTranslator : MonoBehaviour
             while (elapsedTime < typingSpeed)
             {
                 skipTimer += Time.deltaTime;
-                if ((Input.GetKeyDown(KeyCode.F) || Input.GetMouseButtonDown(0)) && skipTimer >= skipDelay)
+                if ((Input.GetKeyDown(KeyCode.F) || Input.GetMouseButtonDown(0)) && skipTimer >= skipDelay && !autoSkip)
                 {
                     skipTyping = true;
                     break;

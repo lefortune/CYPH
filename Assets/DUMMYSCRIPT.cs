@@ -5,11 +5,13 @@ using UnityEngine;
 public class DUMMYSCRIPT : MonoBehaviour
 {
     public DialogueEvents dialogueEvents;
+    public CutsceneStarter cutsceneStarter;
     // Start is called before the first frame update
     void Start()
     {
         dialogueEvents = GetComponent<DialogueEvents>();
-        dialogueEvents.ConvoBrother_1();
+        cutsceneStarter = GetComponent<CutsceneStarter>();
+        cutsceneStarter.ConvoBrother1Start();
     }
 
     // Update is called once per frame

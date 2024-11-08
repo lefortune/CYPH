@@ -117,7 +117,7 @@ public class DialogueGameManager : MonoBehaviour
             Debug.Log("Starting line");
             isDialogueActive = true;
             dynamicPanel.UpdateUISpeaker(line.speaker, line.speakerLabel, isNarrator);
-            yield return StartCoroutine(dialogueText.GetComponent<DialogueTranslator>().TypeDialogue(line.text, line.speaker));
+            yield return StartCoroutine(dialogueText.GetComponent<DialogueTranslator>().TypeDialogue(line.text, line.speaker, line.autoSkip));
             
             isDialogueActive = false;
             if (line.autoSkip)

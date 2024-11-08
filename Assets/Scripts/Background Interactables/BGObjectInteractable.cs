@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BackgroundInteractables : MonoBehaviour
 {
@@ -37,6 +38,9 @@ public class BackgroundInteractables : MonoBehaviour
                 FindAnyObjectByType<InteractablesManager>().InteractPhone();
             }
         }
-
+        if (objName == "Door1")
+        {
+            SceneManager.LoadScene("ConvoScene");
+        }
     }
 }
