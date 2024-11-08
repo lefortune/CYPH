@@ -107,6 +107,7 @@ public class CarrieController : MonoBehaviour
                     closestDistance = distance;
                     closestHit = hit;
                 }
+                Debug.Log("Starting object interaction");
                 closestHit.transform.GetComponent<BackgroundInteractables>().Interact();
             }
         }

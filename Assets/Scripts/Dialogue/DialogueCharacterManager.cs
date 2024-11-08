@@ -48,7 +48,6 @@ public class DialogueCharacterManager : MonoBehaviour
         if (characterName == CharacterNames.Narrator) return;
         Color originalColor = characterImage.color;
         unfocusedColor = new Color(0.5f, 0.5f, 0.5f, originalColor.a);
-        Debug.Log(unfocusedColor);
         targetScale = unfocusedScale;
         targetColor = unfocusedColor;
         StartCoroutine(Transition());

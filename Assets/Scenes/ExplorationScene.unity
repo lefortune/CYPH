@@ -1338,6 +1338,10 @@ MonoBehaviour:
     group: 
     clip: {fileID: 8300000, guid: efcdb72c866ab4a708209d46b7983f99, type: 3}
     source: {fileID: 0}
+  - name: BellHit
+    group: 
+    clip: {fileID: 8300000, guid: fef73344bf0ea4e86ae78a8eaed4c23f, type: 3}
+    source: {fileID: 0}
   musicGroup: {fileID: 243998503013657228, guid: d58233c12057546cb916864e0322e752, type: 2}
   sfxGroup: {fileID: 243729444503017978, guid: d58233c12057546cb916864e0322e752, type: 2}
   foleyGroup: {fileID: 243764506112553222, guid: d58233c12057546cb916864e0322e752, type: 2}
@@ -1471,7 +1475,7 @@ GameObject:
   - component: {fileID: 839700108}
   m_Layer: 0
   m_Name: Door1
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -35,8 +35,6 @@ public class InteractablesManager : MonoBehaviour
         {
             var line = texts.interactableLines[currLineIndex];
 
-            Debug.Log("Starting object interaction");
-
             yield return StartCoroutine(text.GetComponent<DialogueTranslator>().TypeDialogue(line.text));
             
             yield return new WaitForSeconds(0.5f);

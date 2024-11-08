@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CutsceneStarter : MonoBehaviour
 {
@@ -8,25 +9,26 @@ public class CutsceneStarter : MonoBehaviour
     public static bool inEvent;
     public static int cutsceneNum;
 
-    public CarrieController playerController;
 
     void Awake() 
     {
-        playerController = FindAnyObjectByType<CarrieController>();
+        dialogueEvents = GetComponent<DialogueEvents>();
+        cutsceneNum = 0;
     }
-    // Start is called before the first frame update
     void Start()
     {
         inEvent = true;
-        dialogueEvents = GetComponent<DialogueEvents>();
-        cutsceneNum = 0;
-        dialogueEvents.IntroCutscenePt1();
+        if (SceneManager.GetActiveScene().name == "ExplorationScene") {
+            dialogueEvents.IntroCutscenePt1();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (!inEvent && cutsceneNum == -1) {
+            SceneManager.LoadScene("Brother Minigame");
+        }
     }
 
     public void IntroCutscenePt2Start()
@@ -35,6 +37,13 @@ public class CutsceneStarter : MonoBehaviour
         FindAnyObjectByType<AudioManager>().Stop("PhoneLinging");
         FindAnyObjectByType<AudioManager>().Play("PhonePickup");
         dialogueEvents.IntroCutscenePt2();
+    }
+
+    public void ConvoBrother1Start()
+    {
+        inEvent = true;
+        cutsceneNum = -2;
+        dialogueEvents.ConvoBrother_1();
     }
 
 }
