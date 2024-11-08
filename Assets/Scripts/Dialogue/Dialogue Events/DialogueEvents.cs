@@ -76,7 +76,7 @@ public class DialogueEvents : MonoBehaviour
             LineBuilder("What the hell is wrong with you!", CharacterNames.Carrie, "???", actionName:"angryhop"),
             LineBuilder("My name is Carrie!", CharacterNames.Carrie, "Carrie"),
             LineBuilder("And it looks like you need some correction!", CharacterNames.Carrie, "Carrie", true, options),
-            LineBuilder("...", CharacterNames.Brother, "Brother", actionName:"shake"),
+            LineBuilder("...", CharacterNames.Brother, "Brother", actionName:"shake", hasAnswer:true, answers:options),
             LineBuilder("Little bro was cooked.", CharacterNames.Narrator, "", isFinal:true)
         };
         dialogueManager.StartDialogueEvent(dialogueEvent, presentCharacters);

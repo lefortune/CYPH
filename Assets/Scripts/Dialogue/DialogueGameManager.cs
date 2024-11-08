@@ -8,6 +8,9 @@ public class DialogueGameManager : MonoBehaviour
 {
     public List<DialogueCharacterManager> characters; // Reference to all characters on screen
 
+    public List<int> answerPos;
+    public GameObject answerObject;
+
     private Dictionary<CharacterNames, DialogueCharacterManager> characterMap;
     public GameObject dialogueText;
     public GameObject dialogueBox;
@@ -103,23 +106,27 @@ public class DialogueGameManager : MonoBehaviour
 
     IEnumerator ShowDialogueOptions(List<DialogueOption> options)
     {
+        foreach (int i in answerPos)
+        {
+            Instantiate(answerObject, new Vector3(i, -127, 0), new Quaternion(0,0,0,0)) ;
+        }
         yield return null;
-        // UIManager.ShowOptions(options);
+        //UIManager.ShowOptions(options);
 
-        // bool optionSelected = false;
-        // int selectedOptionIndex = -1;
+        //bool optionSelected = false;
+        //int selectedOptionIndex = -1;
 
-        // UIManager.OnOptionSelected += (index) =>
-        // {
-        //     optionSelected = true;
-        //     selectedOptionIndex = index;
-        // };
-        // yield return new WaitUntil(() => optionSelected);
+        //UIManager.OnOptionSelected += (index) =>
+        //{
+        //    optionSelected = true;
+        //    selectedOptionIndex = index;
+        //};
+        //yield return new WaitUntil(() => optionSelected);
 
-        // UIManager.HideOptions();
-        // // Log the player's choice and determine the next line.
-        // int nextLineIndex = options[selectedOptionIndex].nextLineIndex;
-        // currentLineIndex = nextLineIndex; 
+        //UIManager.HideOptions();
+        //// Log the player's choice and determine the next line.
+        //int nextLineIndex = options[selectedOptionIndex].nextLineIndex;
+        //currentLineIndex = nextLineIndex;
     }
 
     public void SetSpeaker(CharacterNames speaker)

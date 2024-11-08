@@ -442,7 +442,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characters: []
+  answerPos: 6e00000022010000d60100008a020000
+  answerObject: {fileID: 105065247936367287, guid: 50fe084dbc1694f6fa6dfd545af32aaa, type: 3}
   dialogueText: {fileID: 841076667}
+  dialogueBox: {fileID: 0}
   speakerBox: {fileID: 1877335070}
 --- !u!1 &681898640
 GameObject:
