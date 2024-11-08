@@ -10,6 +10,7 @@ public class DialogueGameManager : MonoBehaviour
 
     public List<int> answerPos;
     public GameObject answerObject;
+    public bool answerSelected;
 
     private Dictionary<CharacterNames, DialogueCharacterManager> characterMap;
     public GameObject dialogueText;
@@ -154,11 +155,12 @@ public class DialogueGameManager : MonoBehaviour
 
     IEnumerator ShowDialogueOptions(List<DialogueOption> options)
     {
+        Debug.Log("running");
         foreach (int i in answerPos)
         {
-            Instantiate(answerObject, new Vector3(i, -127, 0), new Quaternion(0,0,0,0)) ;
+            Instantiate(answerObject, new Vector3(i + 410, 43, 0), new Quaternion(0,0,0,0), dialogueBox.transform) ;
         }
-        yield return null;
+        yield return new WaitUntil(() => answerSelected);
         //UIManager.ShowOptions(options);
 
         //bool optionSelected = false;
