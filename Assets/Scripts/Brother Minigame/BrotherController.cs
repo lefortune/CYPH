@@ -1,19 +1,15 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class BrotherController : MonoBehaviour
 {
     private Rigidbody2D brotherRB;
     public Rigidbody2D carrieRB;
-    private bool isRunning;
-    private float jumpTimer;
-    private int actionStage;
-    private bool jumping;
     private bool touchingGround;
-    public List<float> jumpPosition = new List<float>();
-    private int jumpSwitch;
     private float runSpeed;
-    private float jumpSpot;
+    private bool started;
+    public Transform player;
 
     int FloorLayer;
 
@@ -26,85 +22,93 @@ public class BrotherController : MonoBehaviour
 
     private void Start()
     {
+        started = false;
         runSpeed = 5;
-        isRunning = true;
-        actionStage = 0;
-        jumpTimer = 0f;
-        //makeJumpTimes();
-        jumpSwitch = 0;
         FloorLayer = LayerMask.NameToLayer("Floor");
 
     }
 
     private void Update()
     {
-
-        //Debug.Log(brotherRB.position.x);
-        if (brotherRB.position.x >= 120)
+        if (!started)
         {
-            isRunning = false;
+            started = !started;
+            StartCoroutine(Move(0));
         }
-        else if (brotherRB.position.x - carrieRB.position.x > 12 && touchingGround)
-        {
-            Stop();
-            isRunning = false;
-        }
-        else
-        {
-            isRunning = true;
-        }
+    }
 
-
-        if (brotherRB.position.x - carrieRB.position.x > 7)
+    public IEnumerator Move(int level)
+    {
+        switch (level)
         {
-            runSpeed = 4;
-        }
-        else if (brotherRB.position.x - carrieRB.position.x < 5 || brotherRB.position.x >= 100)
-        {
-            runSpeed = 6;
-        }
-        else
-        {
-            runSpeed = 5;
-        }
-
-
-        Debug.Log(runSpeed);
-
-        if (isRunning)
-        {
-            jumpTimer += Time.deltaTime;
-
-            if (touchingGround && brotherRB.velocity.x != runSpeed)
-            {
-                Walk();
-            }
-            switch (runSpeed)
-            {
-                case 4:
-                    jumpSpot = jumpPosition[jumpSwitch];
-                    break;
-                case 5:
-                    jumpSpot = jumpPosition[jumpSwitch];
-                    break;
-                case 6:
-                    jumpSpot = jumpPosition[jumpSwitch] - 5;
-                    break;
-            }
-            Debug.Log(jumpSpot);
-            if (brotherRB.position.x >= jumpSpot && touchingGround)
-            {
+            case 0:
+                while (brotherRB.position.x <= -4.2)
+                {
+                    Walk();
+                    yield return null;
+                }
                 Jump();
-                jumpSwitch++;
-            }
+                yield return new WaitForSeconds(.1f);
+                yield return new WaitUntil(() => touchingGround);
+                while (brotherRB.position.x <= 13)
+                {
+                    Walk();
+                    yield return null;
+                }
+                Stop();
+                player.GetComponent<CarrierBrotherController>().setTransitioning(false);
+                break;
+            case 1:
+                while (brotherRB.position.x <= 14)
+                {
+                    Walk();
+                    yield return null;
+                }
+                Jump();
+                yield return new WaitForSeconds(.1f);
+                yield return new WaitUntil(() => touchingGround);
+                while (brotherRB.position.x <= 20.5)
+                {
+                    Walk();
+                    yield return null;
+                }
+                Jump();
+                yield return new WaitForSeconds(.1f);
+                yield return new WaitUntil(() => touchingGround);
+                while (brotherRB.position.x <= 33)
+                {
+                    Walk();
+                    yield return null;
+                }
+                Stop();
+                player.GetComponent<CarrierBrotherController>().setTransitioning(false);
+                break;
+            case 2:
+                yield return new WaitForSeconds(.5f);
+                while (brotherRB.position.x <= 24.59)
+                {
+                    Walk();
+                    yield return null;
+                }
+                Stop();
+                yield return new WaitForSeconds(.3f);
+                while (brotherRB.position.x <= 27.59)
+                {
+                    Walk();
+                    yield return null;
+                }
+                Stop();
+                yield return new WaitForSeconds(.3f);
+                while (brotherRB.position.x <= 53)
+                {
+                    Walk();
+                    yield return null;
+                }
+                player.GetComponent<CarrierBrotherController>().setTransitioning(false);
+                break;
         }
-        else
-        {
-            Stop();
-        }
 
-
-
+        yield return null;
     }
 
     private void Walk()
@@ -114,7 +118,7 @@ public class BrotherController : MonoBehaviour
 
     private void Jump()
     {
-        brotherRB.AddForce(new Vector2(0, 500));
+        brotherRB.AddForce(new Vector2(0, 300));
     }
 
     private void Stop()
@@ -146,3 +150,68 @@ public class BrotherController : MonoBehaviour
 
 
 }
+
+
+
+
+
+// Old controls
+//if (brotherRB.position.x >= 120)
+//{
+//    isRunning = false;
+//}
+//else if (brotherRB.position.x - carrieRB.position.x > 12 && touchingGround)
+//{
+//    Stop();
+//    isRunning = false;
+//}
+//else
+//{
+//    isRunning = true;
+//}
+
+
+//if (brotherRB.position.x - carrieRB.position.x > 7)
+//{
+//    runSpeed = 4;
+//}
+//else if (brotherRB.position.x - carrieRB.position.x < 5 || brotherRB.position.x >= 100)
+//{
+//    runSpeed = 6;
+//}
+//else
+//{
+//    runSpeed = 5;
+//}
+
+//if (isRunning)
+//{
+//    jumpTimer += Time.deltaTime;
+
+//    if (touchingGround && brotherRB.velocity.x != runSpeed)
+//    {
+//        Walk();
+//    }
+//    switch (runSpeed)
+//    {
+//        case 4:
+//            jumpSpot = jumpPosition[jumpSwitch];
+//            break;
+//        case 5:
+//            jumpSpot = jumpPosition[jumpSwitch];
+//            break;
+//        case 6:
+//            jumpSpot = jumpPosition[jumpSwitch] - 5;
+//            break;
+//    }
+//    //Debug.Log(jumpSpot);
+//    if (brotherRB.position.x >= jumpSpot && touchingGround)
+//    {
+//        Jump();
+//        jumpSwitch++;
+//    }
+//}
+//else
+//{
+//    Stop();
+//}

@@ -8,6 +8,7 @@ TagManager:
   - Speaker
   - Interactable
   - Brother
+  - Death
   layers:
   - Default
   - TransparentFX

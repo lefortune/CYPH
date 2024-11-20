@@ -30,6 +30,7 @@ public class CarrierBrotherController : MonoBehaviour
     #endregion
 
     int FloorLayer;
+    public GameObject gameManager;
 
     #region Physics_components
     Rigidbody2D PlayerRB;
@@ -38,6 +39,16 @@ public class CarrierBrotherController : MonoBehaviour
 
     #region Animation_components
     Animator anim;
+    #endregion
+
+    #region Camera Controls
+    public GameObject mainCamera;
+    private bool transitioning;
+    #endregion
+
+    #region levelVariable
+    int level;
+    public List<float> levelEnds = new List<float>();
     #endregion
 
     #region Unity_functions
@@ -51,16 +62,20 @@ public class CarrierBrotherController : MonoBehaviour
         x_input = Input.GetAxisRaw("Horizontal");
         y_input = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetKey(KeyCode.LeftShift)) {
-            isSprint = true;
-        } else {
-            isSprint = false;
+        if (!transitioning)
+        {
+            Move();
         }
-        Move();
 
         if (PlayerRB.position.y < -100)
         {
             RestartScene();
+        }
+
+        if (PlayerRB.position.x > levelEnds[level])
+        {
+            transitioning = true;
+            gameManager.GetComponent<BrotherGameManager>().NextLevel();
         }
     }
     #endregion
@@ -68,7 +83,8 @@ public class CarrierBrotherController : MonoBehaviour
     #region Start
     private void Start()
     {
-
+        transitioning = true;
+        level = 1;
     }
     #endregion
     #region Movement_functions
@@ -76,9 +92,6 @@ public class CarrierBrotherController : MonoBehaviour
     {
         Vector2 movement = new Vector2(x_input * moveSpeed, 0);
         PlayerRB.AddForce(movement);
-        if (isSprint) {
-            PlayerRB.velocity *= 2;
-        }
 
         if (PlayerRB.velocity.x > maxSpeed)
         {
@@ -143,6 +156,11 @@ public class CarrierBrotherController : MonoBehaviour
         {
             EndGame();
         }
+
+        if (coll.gameObject.CompareTag("Death"))
+        {
+            RestartLevel();
+        }
     }
 
 
@@ -160,9 +178,28 @@ public class CarrierBrotherController : MonoBehaviour
         SceneManager.LoadScene(currentSceneName);
     }
 
+    public void RestartLevel()
+    {
+        PlayerRB.velocity = Vector2.zero;
+        PlayerRB.position = new Vector3(levelEnds[level - 1] + .5f, -3.5f);
+    }
+
+    public void IncrementLevel()
+    {
+        level++;
+        return;
+    }
+
+
     public void EndGame()
     {
         Debug.Log("You Win!");
+    }
+
+    public void setTransitioning(bool t)
+    {
+        transitioning = t;
+        return;
     }
 
 }
