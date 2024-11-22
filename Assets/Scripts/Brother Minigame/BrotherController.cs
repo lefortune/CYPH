@@ -10,6 +10,8 @@ public class BrotherController : MonoBehaviour
     private float runSpeed;
     private bool started;
     public Transform player;
+    private Animator animator;
+    private float elapsedTime;
 
     int FloorLayer;
 
@@ -25,6 +27,7 @@ public class BrotherController : MonoBehaviour
         started = false;
         runSpeed = 5;
         FloorLayer = LayerMask.NameToLayer("Floor");
+        animator = GetComponent<Animator>();
 
     }
 
@@ -106,6 +109,9 @@ public class BrotherController : MonoBehaviour
                 }
                 player.GetComponent<CarrierBrotherController>().setTransitioning(false);
                 break;
+            case 3:
+                player.GetComponent<CarrierBrotherController>().setTransitioning(false);
+                break;
         }
 
         yield return null;
@@ -113,11 +119,17 @@ public class BrotherController : MonoBehaviour
 
     private void Walk()
     {
+        if (touchingGround)
+        {
+            animator.SetBool("Running", true);
+        }
         brotherRB.velocity = new Vector2(runSpeed, 0);
     }
 
     private void Jump()
     {
+        animator.SetBool("Running", false);
+        animator.SetBool("Jumping", true);
         brotherRB.AddForce(new Vector2(0, 300));
     }
 
@@ -136,6 +148,7 @@ public class BrotherController : MonoBehaviour
     {
         if (isFloor(coll.gameObject))
         {
+            animator.SetBool("Jumping", false);
             touchingGround = true;
         }
     }
@@ -144,6 +157,7 @@ public class BrotherController : MonoBehaviour
     {
         if (isFloor(coll.gameObject))
         {
+            animator.SetBool("Running", false);
             touchingGround = false;
         }
     }

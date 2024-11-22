@@ -315,6 +315,7 @@ GameObject:
   - component: {fileID: 333625415}
   - component: {fileID: 333625414}
   - component: {fileID: 333625418}
+  - component: {fileID: 333625419}
   m_Layer: 0
   m_Name: Brother
   m_TagString: Brother
@@ -363,7 +364,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e69f131b9ee754deea07e468ae385620, type: 3}
+  m_Sprite: {fileID: -1570200982, guid: fa2a3b4a87b174b7593ae531d6d456a7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -433,18 +434,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.0068786144}
+  m_Offset: {x: -0.00000166893, y: 0.49392676}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 7.36, y: 11.04}
+    oldSize: {x: 10.810547, y: 10.8}
     newSize: {x: 7.36, y: 11.04}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 7.3760934, y: 11.062906}
+  m_Size: {x: 3.3838, y: 7.222548}
   m_EdgeRadius: 0
 --- !u!4 &333625417
 Transform:
@@ -455,8 +456,8 @@ Transform:
   m_GameObject: {fileID: 333625413}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.3, y: -3.8, z: 0.086427495}
-  m_LocalScale: {x: 0.1365, y: 0.1365, z: 1}
+  m_LocalPosition: {x: -7.29, y: -3.7, z: 0.086427495}
+  m_LocalScale: {x: 0.27933362, y: 0.27933362, z: 2.0464}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -475,6 +476,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   carrieRB: {fileID: 496655528}
   player: {fileID: 496655532}
+--- !u!95 &333625419
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333625413}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bf14e4640094b415baac2802e5a0c21a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &379376506 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 483288984054040580, guid: 7433b40d36c424791accb338a9869148, type: 3}
@@ -638,6 +660,7 @@ MonoBehaviour:
   - 10
   - 30
   - 50
+  - 70
 --- !u!60 &496655534
 PolygonCollider2D:
   m_ObjectHideFlags: 0
