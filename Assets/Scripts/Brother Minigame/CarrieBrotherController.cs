@@ -67,9 +67,9 @@ public class CarrierBrotherController : MonoBehaviour
             Move();
         }
 
-        if (PlayerRB.position.y < -100)
+        if (PlayerRB.position.y < -10)
         {
-            RestartScene();
+            RestartLevel();
         }
 
         if (PlayerRB.position.x > levelEnds[level])
