@@ -193,7 +193,7 @@ public class CarrierBrotherController : MonoBehaviour
 
     public void EndGame()
     {
-        Debug.Log("You Win!");
+        SceneManager.LoadScene("BrotherRoom");
     }
 
     public void setTransitioning(bool t)

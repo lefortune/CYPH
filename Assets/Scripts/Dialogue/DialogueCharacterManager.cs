@@ -20,6 +20,8 @@ public class DialogueCharacterManager : MonoBehaviour
 
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
+
         focusedScale = transform.localScale;
         unfocusedScale = focusedScale * 0.9f;
 

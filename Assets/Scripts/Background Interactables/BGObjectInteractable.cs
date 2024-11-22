@@ -40,6 +40,13 @@ public class BackgroundInteractables : MonoBehaviour
         }
         if (objName == "Door1")
         {
+            CutsceneStarter.cutsceneNum = 2;
+            SceneManager.LoadScene("BrotherRoom");
+        }
+
+        if (objName == "BrotherInteractable")
+        {
+            CutsceneStarter.cutsceneNum = 3;
             SceneManager.LoadScene("ConvoScene");
         }
     }

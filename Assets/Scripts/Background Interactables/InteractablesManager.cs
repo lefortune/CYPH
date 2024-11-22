@@ -54,6 +54,7 @@ public class InteractablesManager : MonoBehaviour
 
     // Below are all of the Object Interactions in the Game
     #region Object interactions
+    // Main Hallway
     public void InteractCouch()
     {
         interactableTexts.interactableLines = new List<InteractableTextLine>
@@ -90,6 +91,9 @@ public class InteractablesManager : MonoBehaviour
     {
         FindAnyObjectByType<AudioManager>().Play("Whistle");
     }
+
+    // Brother Room
+    
     #endregion
 
 }
