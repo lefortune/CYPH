@@ -44,9 +44,10 @@ public class CutsceneStarter : MonoBehaviour
         }
 
         if (!inEvent && cutsceneNum == -1) {
+            cutsceneNum = 0;
             SceneManager.LoadScene("Brother Minigame");
         }
-        Debug.Log(cutsceneNum + " | " + inEvent);
+        // Debug.Log(cutsceneNum + " | " + inEvent);
     }
 
     public void IntroCutscenePt2Start()
