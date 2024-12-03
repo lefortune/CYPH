@@ -24,6 +24,7 @@ public class BrotherController : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("I am running off a cligg");
         started = false;
         runSpeed = 5;
         FloorLayer = LayerMask.NameToLayer("Floor");
@@ -35,6 +36,7 @@ public class BrotherController : MonoBehaviour
     {
         if (!started)
         {
+            Debug.Log("I am running");
             started = !started;
             StartCoroutine(Move(0));
         }
@@ -42,6 +44,7 @@ public class BrotherController : MonoBehaviour
 
     public IEnumerator Move(int level)
     {
+        Debug.Log("Move");
         switch (level)
         {
             case 0:

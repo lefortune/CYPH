@@ -6,6 +6,7 @@ using UnityEngine.TextCore.Text;
 
 public class DialogueGameManager : MonoBehaviour
 {
+    public DialogueEvents dialogueEvents;
     public List<DialogueCharacterManager> characters; // Reference to all characters on screen
 
     public List<int> answerPos;
@@ -19,10 +20,13 @@ public class DialogueGameManager : MonoBehaviour
     private DynamicPanel dynamicPanel;
     
     GameObject[] taggedSpeakers;
-    private bool isDialogueActive = false;
+    public static bool isDialogueActive = false;
+    public static bool inEvent = false;
+    public static int cutsceneNum = 0;
 
     void Awake()
     {
+        DontDestroyOnLoad(gameObject);
         characterMap = new Dictionary<CharacterNames, DialogueCharacterManager>();
         dynamicPanel = speakerBox.GetComponent<DynamicPanel>();
 
@@ -32,13 +36,22 @@ public class DialogueGameManager : MonoBehaviour
         taggedSpeakers = GameObject.FindGameObjectsWithTag("Speaker");
     }
 
-    void Start()
+    void Update()
     {
-
+        if (dialogueText == null) {
+            dialogueText = GameObject.Find("DialogueText");
+        }
+        if (dialogueBox == null) {
+            dialogueBox = GameObject.Find("DialogueBox");
+        }
+        if (speakerBox == null) {
+            speakerBox = GameObject.Find("SpeakerBox");
+        }
     }
 
     public void StartDialogueEvent(DialogueEvent dialogueEvent, List<GameObject> thisEventCharacters)
     {
+        taggedSpeakers = GameObject.FindGameObjectsWithTag("Speaker");
         speakerBox.SetActive(true);
         dialogueBox.SetActive(true);
         foreach (var s in taggedSpeakers) {

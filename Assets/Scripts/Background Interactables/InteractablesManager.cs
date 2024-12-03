@@ -11,7 +11,17 @@ public class InteractablesManager : MonoBehaviour
     public InteractableTexts interactableTexts;
 
     void Awake() {
+        DontDestroyOnLoad(gameObject);
         // text box is already set inactive by DialogueGameManager
+    }
+
+    void Update() {
+        if (text == null) {
+            text = GameObject.Find("DialogueText");
+        }
+        if (textBox == null) {
+            textBox = GameObject.Find("DialogueBox");
+        }
     }
 
     private InteractableTextLine LineBuilder(
@@ -54,6 +64,8 @@ public class InteractablesManager : MonoBehaviour
 
     // Below are all of the Object Interactions in the Game
     #region Object interactions
+
+    // Main Hallway
     public void InteractCouch()
     {
         interactableTexts.interactableLines = new List<InteractableTextLine>
@@ -89,6 +101,66 @@ public class InteractablesManager : MonoBehaviour
     public void InteractJosh()
     {
         FindAnyObjectByType<AudioManager>().Play("Whistle");
+    }
+
+    // Brother Room
+    public void InteractBed()
+    {
+        interactableTexts.interactableLines = new List<InteractableTextLine>
+        {
+            LineBuilder("This must be his bed. Pretty messy! There's also a... what was it called again? \"Daki-makura\"?"),
+            LineBuilder("That girl on it... I wonder how old she is.", true)
+        };
+        StartCoroutine(InteractTextRoutine(interactableTexts));
+    }
+    public void InteractTV()
+    {
+        interactableTexts.interactableLines = new List<InteractableTextLine>
+        {
+            LineBuilder("There's a video game on... I see a small, flying white character, and next to her there's a orange-haired man holding a blue and watery weapon."),
+            LineBuilder("He looks cool! I guess that's a break from anime women for once.", true)
+        };
+        StartCoroutine(InteractTextRoutine(interactableTexts));
+    }
+    public void InteractCouchBro()
+    {
+        interactableTexts.interactableLines = new List<InteractableTextLine>
+        {
+            LineBuilder("Aside from the crumbs and stains, it's in relatively good condition. \nI prefer mine though!", true)
+        };
+        StartCoroutine(InteractTextRoutine(interactableTexts));
+    }
+    public void InteractToybox()
+    {
+        interactableTexts.interactableLines = new List<InteractableTextLine>
+        {
+            LineBuilder("Honestly, I'm a little scared to open this and see what \"toys\" are inside...", true)
+        };
+        StartCoroutine(InteractTextRoutine(interactableTexts));
+    }
+    public void InteractDirtyClothes()
+    {
+        interactableTexts.interactableLines = new List<InteractableTextLine>
+        {
+            LineBuilder("I'm going to be sick.", true)
+        };
+        StartCoroutine(InteractTextRoutine(interactableTexts));
+    }
+    public void InteractCloset()
+    {
+        interactableTexts.interactableLines = new List<InteractableTextLine>
+        {
+            LineBuilder("The shelves are filled to the brim with figurines and collectibles. \nSaying this feels wrong, but... it's really quite an impressive collection!", true)
+        };
+        StartCoroutine(InteractTextRoutine(interactableTexts));
+    }
+    public void InteractDeskBro()
+    {
+        interactableTexts.interactableLines = new List<InteractableTextLine>
+        {
+            LineBuilder("Quite the setup he's got going on here! \nHey, this object tucked away on the left... looks really familiar for some reason?", true)
+        };
+        StartCoroutine(InteractTextRoutine(interactableTexts));
     }
     #endregion
 

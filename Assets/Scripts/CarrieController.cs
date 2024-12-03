@@ -14,6 +14,7 @@ public class CarrieController : MonoBehaviour
 
     #region Physics_components
     Rigidbody2D PlayerRB;
+    SpriteRenderer PlayerSR;
     BoxCollider2D PlayerColl;
     public Vector2 currDirection;
     #endregion
@@ -29,6 +30,7 @@ public class CarrieController : MonoBehaviour
     #region Unity_functions
     private void Awake() {
         PlayerRB = GetComponent<Rigidbody2D>();
+        PlayerSR = GetComponent<SpriteRenderer>();
         PlayerColl = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
         interactablesManager = FindAnyObjectByType<InteractablesManager>();
@@ -84,6 +86,15 @@ public class CarrieController : MonoBehaviour
 
         anim.SetFloat("DirX", currDirection.x);
         anim.SetFloat("DirY", currDirection.y);
+
+        if (currDirection.x > 0)
+        {
+            PlayerSR.flipX = true;
+        }
+        else if (currDirection.x < 0)
+        {
+            PlayerSR.flipX = false;
+        }
     }
     #endregion
 
