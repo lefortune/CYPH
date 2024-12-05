@@ -5,6 +5,7 @@ public class MotherController : MonoBehaviour
 {
     public GameObject Carrie;
     public Rigidbody2D MotherRB;
+    public Animator anim;
     public float speed;
     private bool cleaning;
     private bool moving;
@@ -14,10 +15,54 @@ public class MotherController : MonoBehaviour
 
     private void Update()
     {
+
+        Debug.Log(MotherRB.velocity.x > 0);
+        if (MotherRB.velocity.x > 0)
+        {
+            anim.SetBool("Left", false);
+            anim.SetBool("Up", false);
+            anim.SetBool("Down", false);
+            anim.SetBool("Moving", true);
+            anim.SetBool("Right", true);
+        }
+        else if (MotherRB.velocity.x < 0)
+        {
+            anim.SetBool("Left", true);
+            anim.SetBool("Up", false);
+            anim.SetBool("Down", false);
+            anim.SetBool("Moving", true);
+            anim.SetBool("Right", false);
+        }
+        else if (MotherRB.velocity.y > 0)
+        {
+            anim.SetBool("Left", false);
+            anim.SetBool("Up", true);
+            anim.SetBool("Down", false);
+            anim.SetBool("Moving", true);
+            anim.SetBool("Right", false);
+        }
+        else if (MotherRB.velocity.y < 0)
+        {
+            anim.SetBool("Left", false);
+            anim.SetBool("Up", false);
+            anim.SetBool("Down", true);
+            anim.SetBool("Right", false);
+            anim.SetBool("Moving", true);
+        }
+        else 
+        {
+            anim.SetBool("Left", false);
+            anim.SetBool("Up", false);
+            anim.SetBool("Down", false);
+            anim.SetBool("Right", false);
+            anim.SetBool("Moving", false);
+        }
+
         if (!moving)
         {
             moving = true;
-            StartCoroutine(CleaningLoop());
+            //StartCoroutine(CleaningLoop());
+            StartCoroutine(Sweep());
         }
     }
 
@@ -25,46 +70,69 @@ public class MotherController : MonoBehaviour
     {
         moving = false;
         cleaning = true;
+        anim = GetComponent<Animator>();
     }
 
-    public IEnumerator CleaningLoop()
+    public IEnumerator Sweep()
     {
-        turnTime = Random.Range(4, 7);
-        elapsedTime = 0;
-        while (cleaning)
+        while (MotherRB.position.x > -2)
         {
-            while (MotherRB.position.x < 3.8)
-            {
-                MotherRB.velocity = Vector2.right * speed;
-                elapsedTime += Time.deltaTime;
-                if (elapsedTime > turnTime)
-                {
-                    StartCoroutine(turn());
-                    StopCoroutine(CleaningLoop());
-                    break;
-                }
-                yield return null;
-            }
-            while (MotherRB.position.x > -3.8)
-            {
-                MotherRB.velocity = Vector2.left * speed;
-                elapsedTime += Time.deltaTime;
-                if (elapsedTime > turnTime)
-                {
-                    StartCoroutine(turn());
-                    StopCoroutine(CleaningLoop());
-                    break;
-                }
-                yield return null;
-            }
-            if (elapsedTime > turnTime)
-            {
-                break;
-            }
+            MotherRB.velocity = Vector2.left * speed;
             yield return null;
         }
-        yield return null;
+        MotherRB.velocity = Vector2.zero;
+        anim.SetBool("Sweep", true);
+        yield return new WaitForSeconds(1);
+        MotherRB.transform.rotation = new Quaternion(0, 180, 0, 0);
+        yield return new WaitForSeconds(1);
+        MotherRB.transform.rotation = new Quaternion(0, 0, 0, 0);
+        yield return new WaitForSeconds(1);
+        MotherRB.transform.rotation = new Quaternion(0, 180, 0, 0);
+        yield return new WaitForSeconds(1);
+        MotherRB.transform.rotation = new Quaternion(0, 0, 0, 0);
+        anim.SetBool("Sweep", false);
+
     }
+
+    //public IEnumerator CleaningLoop()
+    //{
+    //    //turnTime = Random.Range(4, 7);
+    //    turnTime = 3;
+    //    elapsedTime = 0;
+    //    while (cleaning)
+    //    {
+    //        while (MotherRB.position.x < 3.4)
+    //        {
+    //            MotherRB.velocity = Vector2.right * speed;
+    //            elapsedTime += Time.deltaTime;
+    //            if (elapsedTime > turnTime)
+    //            {
+    //                StartCoroutine(turn());
+    //                StopCoroutine(CleaningLoop());
+    //                break;
+    //            }
+    //            yield return null;
+    //        }
+    //        while (MotherRB.position.x > -3.4)
+    //        {
+    //            MotherRB.velocity = Vector2.left * speed;
+    //            elapsedTime += Time.deltaTime;
+    //            if (elapsedTime > turnTime)
+    //            {
+    //                StartCoroutine(turn());
+    //                StopCoroutine(CleaningLoop());
+    //                break;
+    //            }
+    //            yield return null;
+    //        }
+    //        if (elapsedTime > turnTime)
+    //        {
+    //            break;
+    //        }
+    //        yield return null;
+    //    }
+    //    yield return null;
+    //}
 
 
     public IEnumerator turn()
@@ -101,24 +169,26 @@ public class MotherController : MonoBehaviour
 
     public IEnumerator Look()
     {
-        while (true)
-        {
-            elapsedTimeTwo = 0;
-            while (elapsedTimeTwo < 2)
-            {
-                MotherRB.rotation += .03f;
-                elapsedTimeTwo += Time.deltaTime;
-                yield return null;
-            }
-            elapsedTimeTwo = 0;
-            while (elapsedTimeTwo < 2)
-            {
-                MotherRB.rotation -= .03f;
-                elapsedTimeTwo += Time.deltaTime;
-                yield return null;
-            }
-            yield return null;
-        }
+        //while (true)
+        //{
+        //    elapsedTimeTwo = 0;
+        //    while (elapsedTimeTwo < 2)
+        //    {
+        //        MotherRB.rotation += .03f;
+        //        elapsedTimeTwo += Time.deltaTime;
+        //        yield return null;
+        //    }
+        //    elapsedTimeTwo = 0;
+        //    while (elapsedTimeTwo < 2)
+        //    {
+        //        MotherRB.rotation -= .03f;
+        //        elapsedTimeTwo += Time.deltaTime;
+        //        yield return null;
+        //    }
+        //    yield return null;
+        //}
+
+        yield return null;
     }
 
 }

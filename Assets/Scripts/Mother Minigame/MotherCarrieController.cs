@@ -69,9 +69,18 @@ public class MotherCarrieController : MonoBehaviour
     #region Movement_functions
     private void Move()
     {
-        Vector2 movement = new Vector2(x_input, 0) * moveSpeed;
+        Vector2 movement = new Vector2(x_input, y_input) * moveSpeed;
         PlayerRB.velocity = movement;
-      
+        if (PlayerRB.velocity.x > 0)
+        {
+            PlayerRB.transform.rotation = new Quaternion(0, 180, 0, 0);
+        }
+        if (PlayerRB.velocity.x < 0)
+        {
+            PlayerRB.transform.rotation = new Quaternion(0, 0, 0, 0);
+        }
+
+
         moveSpeed = .5f;
         anim.speed = 1;
 
@@ -102,23 +111,18 @@ public class MotherCarrieController : MonoBehaviour
         Vector2 colliderSize = PlayerColl.bounds.size;
 
         RaycastHit2D[] hits = Physics2D.BoxCastAll(
-            colliderCenter + currDirection / 2, new Vector2(colliderSize.x / 2, colliderSize.y / 2), 0f, Vector2.zero, 0f
+            colliderCenter + currDirection / 2, new Vector2(colliderSize.x / 2, colliderSize.y*20), 0f, Vector2.zero, 0f
             );
-        float closestDistance = float.MaxValue;
-        RaycastHit2D closestHit = new RaycastHit2D();
 
         foreach (RaycastHit2D hit in hits)
         {
-            if (hit.transform.CompareTag("Interactable"))
+            if (hit.transform.name == "MUG")
             {
                 float distance = Vector2.Distance(colliderCenter + currDirection / 2, hit.point);
-                if (distance < closestDistance)
+                if (distance < 1.5f)
                 {
-                    closestDistance = distance;
-                    closestHit = hit;
+                    Debug.Log("You Win");
                 }
-                Debug.Log("Starting object interaction");
-                closestHit.transform.GetComponent<BackgroundInteractables>().Interact();
             }
         }
     }
