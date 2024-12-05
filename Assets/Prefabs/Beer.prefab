@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 901b8cf7dfbd749fbad5c5a8dc825a79, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -103,6 +103,7 @@ MonoBehaviour:
   beerRotationSpeed: 10
   shard1: {fileID: 2921375464570071828, guid: d611b756ad8a44d278b5b2d66e1351fc, type: 3}
   shard2: {fileID: 726850170796031909, guid: 5ba9fc08b32754ee6a131cade3130687, type: 3}
+  gameManager: {fileID: 1021117702167919358, guid: 8a2c51fa1810d4e2d87163d08662b5c4, type: 3}
 --- !u!50 &5617770349965405251
 Rigidbody2D:
   serializedVersion: 4

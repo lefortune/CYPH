@@ -16,6 +16,8 @@ public class BeerFallDown : MonoBehaviour
     public GameObject shard1;
     public GameObject shard2;
 
+    public GameObject gameManager;
+
     Rigidbody2D beerRB;
     private float backgroundPosX;
     private float backgroundScaleX;
@@ -71,7 +73,7 @@ public class BeerFallDown : MonoBehaviour
 
         if (losing)
         {
-            Debug.Log("You Lost!");
+            gameManager.GetComponent<BeerGameManager>().restartGame();
         }
         Destroy(gameObject);
     }

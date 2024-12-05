@@ -13,6 +13,8 @@ public class BeerGameManager : MonoBehaviour
     [Tooltip("First Beer Spawn")]
     private float startTime = 5;
 
+    public GameObject carrie;
+
     private bool beerToggle = false;
 
     private float beerTimer = 0;
@@ -21,7 +23,6 @@ public class BeerGameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -57,5 +58,21 @@ public class BeerGameManager : MonoBehaviour
         Quaternion rotation = new Quaternion(0, 0, 0, 0);
 
         GameObject Beer = Instantiate(BEER, randomizePosition, rotation);
+    }
+
+    void DestroyAllObjectsByTag(string tag)
+    {
+        GameObject[] objects = GameObject.FindGameObjectsWithTag(tag);
+        foreach (GameObject obj in objects)
+        {
+            Destroy(obj);
+        }
+    }
+
+
+    public void restartGame()
+    {
+        carrie.GetComponent<Rigidbody2D>().MovePosition(new Vector2(0, 0));
+        DestroyAllObjectsByTag("BEER");
     }
 }
