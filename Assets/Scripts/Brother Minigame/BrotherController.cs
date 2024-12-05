@@ -55,6 +55,7 @@ public class BrotherController : MonoBehaviour
                 }
                 Jump();
                 yield return new WaitForSeconds(.1f);
+                animator.SetBool("Jumping", false);
                 yield return new WaitUntil(() => touchingGround);
                 while (brotherRB.position.x <= 13)
                 {
@@ -70,16 +71,20 @@ public class BrotherController : MonoBehaviour
                     Walk();
                     yield return null;
                 }
+                animator.SetBool("Running", false);
                 Jump();
                 yield return new WaitForSeconds(.1f);
+                animator.SetBool("Jumping", false);
                 yield return new WaitUntil(() => touchingGround);
                 while (brotherRB.position.x <= 20.5)
                 {
                     Walk();
                     yield return null;
                 }
+                animator.SetBool("Running", false);
                 Jump();
                 yield return new WaitForSeconds(.1f);
+                animator.SetBool("Jumping", false);
                 yield return new WaitUntil(() => touchingGround);
                 while (brotherRB.position.x <= 33)
                 {
@@ -114,6 +119,7 @@ public class BrotherController : MonoBehaviour
                 break;
             case 3:
                 player.GetComponent<CarrierBrotherController>().setTransitioning(false);
+                Stop();
                 break;
         }
 
@@ -138,6 +144,7 @@ public class BrotherController : MonoBehaviour
 
     private void Stop()
     {
+        animator.SetBool("Running", false);
         brotherRB.velocity = Vector2.zero;
     }
 

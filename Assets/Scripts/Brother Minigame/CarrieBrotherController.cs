@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -66,6 +67,10 @@ public class CarrierBrotherController : MonoBehaviour
         {
             Move();
         }
+        else
+        {
+            anim.SetBool("Running", false);
+        }
 
         if (PlayerRB.position.y < -10)
         {
@@ -95,11 +100,13 @@ public class CarrierBrotherController : MonoBehaviour
 
         if (PlayerRB.velocity.x > maxSpeed)
         {
+            PlayerRB.transform.rotation = new Quaternion(0,0,0,0);
             PlayerRB.velocity = new Vector2(maxSpeed, PlayerRB.velocity.y);
             atMaxSpeed = true;
         }
         else if (PlayerRB.velocity.x < -maxSpeed)
         {
+            PlayerRB.transform.rotation = new Quaternion(0, 180, 0, 0);
             PlayerRB.velocity = new Vector2(-maxSpeed, PlayerRB.velocity.y);
             atMaxSpeed = true;
 
@@ -113,7 +120,9 @@ public class CarrierBrotherController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && touchingGround)
         {
             //PlayerRB.velocity = new Vector2(PlayerRB.velocity.x, 0);
+            anim.SetBool("Jumping", true);
             PlayerRB.AddForce(new Vector2(0, jumpForce));
+            StartCoroutine(Delayed());
         }
 
         if (movement != Vector2.zero)
@@ -123,16 +132,19 @@ public class CarrierBrotherController : MonoBehaviour
 
         if (movement == Vector2.zero)
         {
-            anim.SetBool("Moving", false);
+            anim.SetBool("Running", false);
         }
         else
         {
-            anim.SetBool("Moving", true);
+            anim.SetBool("Running", true);
         }
 
-        anim.SetFloat("DirX", currDirection.x);
-        anim.SetFloat("DirY", currDirection.y);
+    }
 
+    private IEnumerator Delayed()
+    {
+        yield return new WaitForSeconds(0.1f);
+        anim.SetBool("Jumping", false);
     }
     #endregion
 
@@ -149,6 +161,7 @@ public class CarrierBrotherController : MonoBehaviour
             {
                 PlayerRB.velocity = new Vector2(maxSpeed, PlayerRB.velocity.y);
             }
+            anim.SetBool("Jumping", false);
             touchingGround = true;
         }
 
@@ -168,6 +181,7 @@ public class CarrierBrotherController : MonoBehaviour
     {
         if (isFloor(coll.gameObject))
         {
+            anim.SetBool("Running", false);
             touchingGround = false;
         }
     }

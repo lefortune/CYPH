@@ -36,7 +36,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Idle Animation
-  m_Speed: -1
+  m_Speed: 0.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 8495759530329142409}
@@ -49,7 +49,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: f4f963b3b53f6447aa0eeb781b3912a4, type: 2}
+  m_Motion: {fileID: 7400000, guid: dd3bbcd271acf4fc1b2f06fc3b73bdb4, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -86,7 +86,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BrotherAnimator
+  m_Name: BrotherMiniCarrieAnimator
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Blend
@@ -142,7 +142,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: c46004488da654fd58e11db4479fb48b, type: 2}
+  m_Motion: {fileID: 7400000, guid: da0ff388cac2e449fb31e0bd08a98b33, type: 2}
   m_Tag: 
   m_SpeedParameter: Blend
   m_MirrorParameter: 
@@ -169,7 +169,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 64301896226164222a4bd74388754596, type: 2}
+  m_Motion: {fileID: 7400000, guid: 13b62577492cc4dc2ad7e302190948f9, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
