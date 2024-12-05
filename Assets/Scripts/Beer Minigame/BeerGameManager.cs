@@ -51,7 +51,7 @@ public class BeerGameManager : MonoBehaviour
 
     void SpawnBeer()
     {
-        Vector3 randomizePosition = new Vector3(Random.Range(-10, 10), 30.7939f, 0);
+        Vector3 randomizePosition = new Vector3(40, Random.Range(-5, 5), 0);
 
         //update the y value depending on how much you want the thing to randomly rotate
         Quaternion rotation = new Quaternion(0, 0, 0, 0);

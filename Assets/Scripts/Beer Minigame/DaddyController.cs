@@ -4,7 +4,15 @@ using UnityEngine;
 
 public class DaddyController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public float delay;
+    private float elapsedTime;
+    Animator anim;
+
+    private void Awake()
+    {
+        anim = GetComponent<Animator>();
+    }
+
     void Start()
     {
         
@@ -13,7 +21,12 @@ public class DaddyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        elapsedTime += Time.deltaTime;
+        if (elapsedTime > delay)
+        {
+            elapsedTime = 0;
+            anim.SetTrigger("Throw");
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)

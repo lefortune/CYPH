@@ -86,6 +86,7 @@ public class CarrierBeerController : MonoBehaviour
 
         if (PlayerRB.transform.position.x >= rightBound && PlayerRB.velocity.x > 0)
         {
+            PlayerRB.transform.rotation = new Quaternion(0, 0, 0, 0);
             PlayerRB.velocity = new Vector2(0, PlayerRB.velocity.y);
         }
         else if (PlayerRB.transform.position.x <= leftBound && PlayerRB.velocity.x < 0)
@@ -96,6 +97,15 @@ public class CarrierBeerController : MonoBehaviour
         if (movement != Vector2.zero)
         {
             currDirection = movement.normalized;
+        }
+
+        if (PlayerRB.velocity.x > 0)
+        {
+            PlayerRB.transform.rotation = new Quaternion(0, 180, 0, 0);
+        }
+        else
+        {
+            PlayerRB.transform.rotation = new Quaternion(0, 0, 0, 0);
         }
 
         if (movement == Vector2.zero)
