@@ -207,7 +207,7 @@ public class CarrierBrotherController : MonoBehaviour
 
     public void EndGame()
     {
-        SceneManager.LoadScene("BrotherRoom");
+        StartCoroutine(FindAnyObjectByType<CutscenesManager>().CutsceneConvoBrotherCaught());
     }
 
     public void setTransitioning(bool t)

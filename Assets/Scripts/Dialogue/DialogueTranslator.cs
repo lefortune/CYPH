@@ -8,7 +8,7 @@ public class DialogueTranslator : MonoBehaviour
 {
     private TextMeshProUGUI dialogueText;
     public float typingSpeed = 0.03f;
-    float skipDelay = 0.3f;
+    float skipDelay = 0.15f;
     bool skipTyping;
 
     private void Awake()
@@ -37,7 +37,7 @@ public class DialogueTranslator : MonoBehaviour
             while (elapsedTime < typingSpeed)
             {
                 skipTimer += Time.deltaTime;
-                if ((Input.GetKeyDown(KeyCode.F) || Input.GetMouseButtonDown(0)) && skipTimer >= skipDelay && !autoSkip)
+                if ((Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown(0)) && skipTimer >= skipDelay && !autoSkip)
                 {
                     skipTyping = true;
                     break;

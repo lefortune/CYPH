@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +26,8 @@ public class CarrieController : MonoBehaviour
 
     #region Other_variables
     public InteractablesManager interactablesManager;
+    public GameObject pointerPrefab;
+    GameObject interactablePointer;
     #endregion
 
     #region Unity_functions
@@ -45,13 +48,52 @@ public class CarrieController : MonoBehaviour
         } else {
             isSprint = false;
         }
-        if (!interactablesManager.isInteractionActive && !CutsceneStarter.inEvent)
+        if (!interactablesManager.isInteractionActive && !CutscenesManager.inEvent)
         {
             Move();
-            if (Input.GetKeyDown(KeyCode.F)) {
-                Interact();
+            
+
+
+            Vector2 colliderCenter = PlayerColl.bounds.center;
+            Vector2 colliderSize = PlayerColl.bounds.size;
+
+            RaycastHit2D[] hits = Physics2D.BoxCastAll(
+                colliderCenter + currDirection/2, new Vector2(colliderSize.x/2, colliderSize.y/2), 0f, Vector2.zero, 0f
+                );
+            float closestDistance = float.MaxValue;
+            RaycastHit2D closestHit = new RaycastHit2D();
+
+            foreach(RaycastHit2D hit in hits) {
+                if (hit.transform.CompareTag("Interactable")) {
+                    float distance = Vector2.Distance(colliderCenter + currDirection/2, hit.point);
+                    if (distance < closestDistance)
+                    {
+                        closestDistance = distance;
+                        closestHit = hit;
+                    }
+
+                    if (interactablePointer == null) {
+                        Vector3 hitPosition = hit.collider.transform.position;
+                        hitPosition.y += 2f;
+                        interactablePointer = Instantiate(pointerPrefab, hitPosition, Quaternion.identity);
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.E)) {
+                        Debug.Log("Starting object interaction");
+                        closestHit.transform.GetComponent<BackgroundInteractables>().Interact();
+                    }
+                } else {
+                    Destroy(interactablePointer);
+                    interactablePointer = null;
+                }
+            }
+            if (hits.Length == 0 && interactablePointer != null) {
+                Destroy(interactablePointer);
+                interactablePointer = null;
             }
         }
+
+        
 
     }
     #endregion
@@ -99,30 +141,6 @@ public class CarrieController : MonoBehaviour
     #endregion
 
     #region Interact_functions
-    private void Interact()
-    {
-        Vector2 colliderCenter = PlayerColl.bounds.center;
-        Vector2 colliderSize = PlayerColl.bounds.size;
-
-        RaycastHit2D[] hits = Physics2D.BoxCastAll(
-            colliderCenter + currDirection/2, new Vector2(colliderSize.x/2, colliderSize.y/2), 0f, Vector2.zero, 0f
-            );
-        float closestDistance = float.MaxValue;
-        RaycastHit2D closestHit = new RaycastHit2D();
-
-        foreach(RaycastHit2D hit in hits) {
-            if (hit.transform.CompareTag("Interactable")) {
-                float distance = Vector2.Distance(colliderCenter + currDirection/2, hit.point);
-                if (distance < closestDistance)
-                {
-                    closestDistance = distance;
-                    closestHit = hit;
-                }
-                Debug.Log("Starting object interaction");
-                closestHit.transform.GetComponent<BackgroundInteractables>().Interact();
-            }
-        }
-    }
 
     #endregion
 }

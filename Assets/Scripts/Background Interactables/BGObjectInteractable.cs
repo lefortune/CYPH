@@ -35,15 +35,15 @@ public class BackgroundInteractables : MonoBehaviour
         }
         if (objName == "BGPhone")
         {
-            if (CutsceneStarter.cutsceneNum == 1) {
-                FindAnyObjectByType<CutsceneStarter>().IntroCutscenePt2Start();
+            if (CutscenesManager.cutsceneNum == 1) {
+                StartCoroutine(FindAnyObjectByType<CutscenesManager>().CutsceneConvoIntroPhone());
             } else {
                 interactablesManager.InteractPhone();
             }
         }
         if (objName == "Door1")
         {
-            CutsceneStarter.cutsceneNum = 2;
+            CutscenesManager.cutsceneNum = 2;
             SceneManager.LoadScene("BrotherRoom");
         }
 
@@ -78,8 +78,7 @@ public class BackgroundInteractables : MonoBehaviour
         }
         if (objName == "BrotherInteractable")
         {
-            CutsceneStarter.cutsceneNum = 3;
-            SceneManager.LoadScene("ConvoScene");
+            StartCoroutine(FindAnyObjectByType<CutscenesManager>().CutsceneConvoBrother());
         }
     }
 }

@@ -48,7 +48,7 @@ public class InteractablesManager : MonoBehaviour
             yield return StartCoroutine(text.GetComponent<DialogueTranslator>().TypeDialogue(line.text));
             
             yield return new WaitForSeconds(0.5f);
-            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.F) || Input.GetMouseButtonDown(0));
+            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown(0));
 
             if (line.isFinal)
             {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine.TextCore.Text;
 
-public class DialogueGameManager : MonoBehaviour
+public class DialogueManager : MonoBehaviour
 {
     public DialogueEvents dialogueEvents;
     public List<DialogueCharacterManager> characters; // Reference to all characters on screen
@@ -21,8 +21,7 @@ public class DialogueGameManager : MonoBehaviour
     
     GameObject[] taggedSpeakers;
     public static bool isDialogueActive = false;
-    public static bool inEvent = false;
-    public static int cutsceneNum = 0;
+    private bool instaskip = false;
 
     void Awake()
     {
@@ -47,9 +46,13 @@ public class DialogueGameManager : MonoBehaviour
         if (speakerBox == null) {
             speakerBox = GameObject.Find("SpeakerBox");
         }
+
+        if (Input.GetKey(KeyCode.X) && Input.GetKeyDown(KeyCode.C)) {
+            instaskip = true;
+        }
     }
 
-    public void StartDialogueEvent(DialogueEvent dialogueEvent, List<GameObject> thisEventCharacters)
+    public IEnumerator StartDialogueEvent(DialogueEvent dialogueEvent, List<GameObject> thisEventCharacters)
     {
         taggedSpeakers = GameObject.FindGameObjectsWithTag("Speaker");
         speakerBox.SetActive(true);
@@ -94,7 +97,15 @@ public class DialogueGameManager : MonoBehaviour
         }
 
         Debug.Log("Starting dialogue event");
-        StartCoroutine(DialogueRoutine(dialogueEvent));
+        yield return StartCoroutine(DialogueRoutine(dialogueEvent));
+
+        dialogueBox.SetActive(false);
+        speakerBox.SetActive(false);
+        foreach (var s in taggedSpeakers) {
+            s.GetComponent<DialogueCharacterManager>().Invisible(true);
+        }
+        CutscenesManager.inEvent = false;
+        Debug.Log("Finished dialogue event");
     }
 
     IEnumerator DialogueRoutine(DialogueEvent dialogueEvent)
@@ -138,7 +149,7 @@ public class DialogueGameManager : MonoBehaviour
                 currLineIndex++;
                 continue;
             }
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.3f);
 
             if (line.hasAnswer)
             {
@@ -150,6 +161,12 @@ public class DialogueGameManager : MonoBehaviour
                 yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.F) || Input.GetMouseButtonDown(0));
             }
 
+            if (instaskip) 
+            {
+                instaskip = false;
+                break;
+            }
+
             if (line.isFinal)
             {
                 break;
@@ -157,13 +174,6 @@ public class DialogueGameManager : MonoBehaviour
                 currLineIndex += line.skipLines > 0 ? line.skipLines : 1;
             }
         }
-        dialogueBox.SetActive(false);
-        speakerBox.SetActive(false);
-        foreach (var s in taggedSpeakers) {
-            s.GetComponent<DialogueCharacterManager>().Invisible(true);
-        }
-        CutsceneStarter.inEvent = false;
-        CutsceneStarter.cutsceneNum++;
     }
 
     IEnumerator ShowDialogueOptions(List<DialogueOption> options)

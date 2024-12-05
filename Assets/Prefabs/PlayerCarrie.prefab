@@ -195,3 +195,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currDirection: {x: 0, y: 0}
   interactablesManager: {fileID: 0}
+  pointerPrefab: {fileID: 7260012861690117924, guid: 3f54deadbe1514b628b0c06e3122583b, type: 3}

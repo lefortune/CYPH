@@ -6,11 +6,11 @@ using UnityEngine.iOS;
 public class DialogueEvents : MonoBehaviour
 {
     public DialogueEvent dialogueEvent;
-    private DialogueGameManager dialogueManager;
+    private DialogueManager dialogueManager;
     private List<GameObject> presentCharacters;
 
     void Awake() {
-        dialogueManager = FindFirstObjectByType<DialogueGameManager>();
+        dialogueManager = FindFirstObjectByType<DialogueManager>();
     }
 
     private DialogueLine LineBuilder(
@@ -45,7 +45,7 @@ public class DialogueEvents : MonoBehaviour
 
     // Below are all of the Dialogue Events in the Game
     #region Dialogue events
-    public void IntroCutscenePt1()
+    public IEnumerator ConvoIntro1()
     {
         presentCharacters = new List<GameObject>{
             GameObject.Find("Narrator"),
@@ -59,11 +59,11 @@ public class DialogueEvents : MonoBehaviour
         {
             LineBuilder("Phew! I think that wraps up my clients for today!", CharacterNames.Carrie, "???"),
             LineBuilder("Finally, I can sit back and relax a litt—", CharacterNames.Carrie, "???"),
-            LineBuilder("A phone starts ringing. \nWalk over to the phone, and press \'F\' to interact!", CharacterNames.Narrator, "", soundName:"PhoneLinging")
+            LineBuilder("A phone starts ringing. \nWalk over to the phone, and press \'E\' to interact!", CharacterNames.Narrator, "", soundName:"PhoneLinging")
         };
-        dialogueManager.StartDialogueEvent(dialogueEvent, presentCharacters);
+        yield return StartCoroutine(dialogueManager.StartDialogueEvent(dialogueEvent, presentCharacters));
     }
-    public void IntroCutscenePt2()
+    public IEnumerator ConvoIntro2()
     {
         presentCharacters = new List<GameObject>{
             GameObject.Find("Narrator"),
@@ -92,9 +92,9 @@ public class DialogueEvents : MonoBehaviour
             LineBuilder("The door closest to you lights up. \nInteract with in-world elements using \"F\" key!", CharacterNames.Narrator, "", soundName:"BellHit"),
             LineBuilder("Alright, Carrie... let's get to work!!", CharacterNames.Carrie, "Carrie", expressionName:"sparkle", isFinal:true),
         };
-        dialogueManager.StartDialogueEvent(dialogueEvent, presentCharacters);
+        yield return StartCoroutine(dialogueManager.StartDialogueEvent(dialogueEvent, presentCharacters));
     }
-    public void IntroCutscenePt3()
+    public IEnumerator ConvoIntro3()
     {
         presentCharacters = new List<GameObject>{
             GameObject.Find("Narrator"),
@@ -109,10 +109,10 @@ public class DialogueEvents : MonoBehaviour
             LineBuilder("There it is!", CharacterNames.Carrie, "Carrie"),
             LineBuilder("Alright, Carrie... let's get to work!!", CharacterNames.Carrie, "Carrie", isFinal:true)
         };
-        dialogueManager.StartDialogueEvent(dialogueEvent, presentCharacters);
+        yield return StartCoroutine(dialogueManager.StartDialogueEvent(dialogueEvent, presentCharacters));
     }
 
-    public void BrotherRoomCutscene1()
+    public IEnumerator ConvoEnterBroRoom()
     {
         presentCharacters = new List<GameObject>{
             GameObject.Find("Narrator"),
@@ -128,10 +128,10 @@ public class DialogueEvents : MonoBehaviour
             LineBuilder("Wow... this is an... interesting room. No—I can't be judging others as an angel! Let's just smile! and... get to work.", CharacterNames.Carrie, "Carrie"),
             LineBuilder("I think I see someone sitting at that desk. Let's go talk to them.", CharacterNames.Carrie, "Carrie", isFinal:true),
         };
-        dialogueManager.StartDialogueEvent(dialogueEvent, presentCharacters);
+        yield return StartCoroutine(dialogueManager.StartDialogueEvent(dialogueEvent, presentCharacters));
     }
 
-    public void ConvoBrother_1()
+    public IEnumerator ConvoBrother1()
     {
         presentCharacters = new List<GameObject>{
             GameObject.Find("Narrator"),
@@ -150,7 +150,7 @@ public class DialogueEvents : MonoBehaviour
         };
         dialogueEvent.dialogueLines = new List<DialogueLine>
         {
-            LineBuilder("Oh yes... God, you're so cute, Asuna-chan. I'm so close... ", CharacterNames.Brother, "???"),
+            LineBuilder("Oh yes... God, you're so cute, Asuna-chan. I'm... ", CharacterNames.Brother, "???"),
             LineBuilder("What the—! I'm sorry, what are you doing?!", CharacterNames.Carrie, "Carrie", actionName:"angryhop"),
             LineBuilder("Huh? Who are you?? And what are you doing in my room??", CharacterNames.Brother, "???", expressionName:"angry", actionName:"shake"),
             LineBuilder("Er, my name is Carrie! But more importantly, what the [REDACTED] were you doing on that computer, kid??", CharacterNames.Carrie, "Carrie"),
@@ -159,8 +159,7 @@ public class DialogueEvents : MonoBehaviour
             LineBuilder("Don't need to hear that! I'm an angel and I'm here to help you! With... whatever it is you need to move on, I guess.", CharacterNames.Carrie, "Carrie"),
             LineBuilder("<i>That being said, I don't know if I really wanna help this kid...</i>", CharacterNames.Carrie, "Carrie"),
             LineBuilder("Huh? Help with what? You can't help me with anything. Just get out of my room! I want to play my games in PEACE, without the presence of a 3D woman.", CharacterNames.Brother, "Austin"),
-            LineBuilder("3D, huh...", CharacterNames.Carrie, "Carrie"),
-            LineBuilder("*BETA EDITION* The following be the dialogue after making the correct answer choice. The full release will contain the answer options.", CharacterNames.Narrator, ""),
+            LineBuilder("<i>3D, huh...</i>T", CharacterNames.Carrie, "Carrie"),
             LineBuilder("So, about that character you were talking about—", CharacterNames.Carrie, "Carrie"),
             LineBuilder("You mean, you mean Asuna-chan!", CharacterNames.Brother, "Austin", expressionName:"happy", actionName:"hop"),
             LineBuilder("Er... yeah. I don't know where she's from but I can tell she's from a game, based on the countless posters and figurines you have.", CharacterNames.Carrie, "Carrie"),
@@ -174,7 +173,47 @@ public class DialogueEvents : MonoBehaviour
             LineBuilder("Wh...what's happening??", CharacterNames.Brother, "Austin", expressionName:"stupid", actionName:"shake"),
             LineBuilder("It's time, Austin. It's time to confront whatever it is that's holding you back.", CharacterNames.Carrie, "Carrie", isFinal:true),
         };
-        dialogueManager.StartDialogueEvent(dialogueEvent, presentCharacters);
+        yield return StartCoroutine(dialogueManager.StartDialogueEvent(dialogueEvent, presentCharacters));
+    }
+
+    public IEnumerator ConvoBrother2()
+    {
+        presentCharacters = new List<GameObject>{
+            GameObject.Find("Narrator"),
+            GameObject.Find("Brother"),
+            GameObject.Find("Carrie")
+        };
+        dialogueEvent.initialExpressions = new List<InitialExpression>
+        {
+            new InitialExpression { character = CharacterNames.Carrie, expressionName = "oo" },
+            new InitialExpression { character = CharacterNames.Brother, expressionName = "freaky" }
+        };
+        dialogueEvent.dialogueLines = new List<DialogueLine>
+        {
+            LineBuilder("Oh yes... God, you're so cute, Asuna-chan. I'm so close... ", CharacterNames.Brother, "???"),
+            LineBuilder("What the—! I'm sorry, what are you doing?!", CharacterNames.Carrie, "Carrie", actionName:"angryhop"),
+            LineBuilder("Huh? Who are you?? And what are you doing in my room??", CharacterNames.Brother, "???", expressionName:"angry", actionName:"shake"),
+            LineBuilder("Er, my name is Carrie! But more importantly, what the [REDACTED] were you doing on that computer, kid??", CharacterNames.Carrie, "Carrie"),
+            LineBuilder("KID?! I ain't no kid, I'm 13! And the name's Austin, too!", CharacterNames.Brother, "Austin", actionName:"angryhop"),
+            LineBuilder("What do you want, anyway? I'm busy here! I'm about to make Asuna-chan my...", CharacterNames.Brother, "Austin"),
+            LineBuilder("Don't need to hear that! I'm an angel and I'm here to help you! With... whatever it is you need to move on, I guess.", CharacterNames.Carrie, "Carrie"),
+            LineBuilder("<i>That being said, I don't know if I really wanna help this kid...</i>", CharacterNames.Carrie, "Carrie"),
+            LineBuilder("Huh? Help with what? You can't help me with anything. Just get out of my room! I want to play my games in PEACE, without the presence of a 3D woman.", CharacterNames.Brother, "Austin"),
+            LineBuilder("<i>3D, huh...</i>T", CharacterNames.Carrie, "Carrie"),
+            LineBuilder("So, about that character you were talking about—", CharacterNames.Carrie, "Carrie"),
+            LineBuilder("You mean, you mean Asuna-chan!", CharacterNames.Brother, "Austin", expressionName:"happy", actionName:"hop"),
+            LineBuilder("Er... yeah. I don't know where she's from but I can tell she's from a game, based on the countless posters and figurines you have.", CharacterNames.Carrie, "Carrie"),
+            LineBuilder("Carrie picks up the letter bracelet next to them.", CharacterNames.Narrator, ""),
+            LineBuilder("What's this? It's like, the only different thing in this room. Is this yours?", CharacterNames.Carrie, "Carrie"),
+            LineBuilder("I-I'm not sure. But I don't want you touching that.", CharacterNames.Brother, "Austin", expressionName:"embarassed"),
+            LineBuilder("How does this make you feel? What can you remember?", CharacterNames.Carrie, "Carrie"),
+            LineBuilder("...", CharacterNames.Brother, "Austin", actionName:"shake"),
+            LineBuilder("<i>Looks like I can use this...</i>", CharacterNames.Carrie, "Carrie"),
+            LineBuilder("Carrie reaches out her hand, and touches the crusty computer screen. Suddenly, a blinding light envelopes the room.", CharacterNames.Narrator, ""),
+            LineBuilder("Wh...what's happening??", CharacterNames.Brother, "Austin", expressionName:"stupid", actionName:"shake"),
+            LineBuilder("It's time, Austin. It's time to confront whatever it is that's holding you back.", CharacterNames.Carrie, "Carrie", isFinal:true),
+        };
+        yield return StartCoroutine(dialogueManager.StartDialogueEvent(dialogueEvent, presentCharacters));
     }
     #endregion
 }
