@@ -13,8 +13,6 @@ public class BeerGameManager : MonoBehaviour
     [Tooltip("First Beer Spawn")]
     private float startTime = 5;
 
-    public GameObject carrie;
-
     private bool beerToggle = false;
 
     private float beerTimer = 0;
@@ -72,7 +70,7 @@ public class BeerGameManager : MonoBehaviour
 
     public void restartGame()
     {
-        carrie.GetComponent<Rigidbody2D>().MovePosition(new Vector2(0, 0));
+        GameObject.Find("PlayerCarrie").transform.position = new Vector3(0, 0, 0);
         DestroyAllObjectsByTag("BEER");
     }
 }
