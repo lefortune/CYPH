@@ -9,8 +9,6 @@ public class DialogueLine
     public string speakerLabel; // What will be shown in speaker box
     public string text;
     public bool autoSkip;   // If the dialogue automatically continues, without clicking
-    public bool hasAnswer;  // If there will be answer choices
-    public List<DialogueOption> answers;    // If hasAnswer, will show these options
     public int skipLines;   // For dialog choices with unique dialog, the last line should point to a different index (RELATIVE)
     public string expressionName;   // Name of the expression sprite to change to ("none" for nochange)
     public string actionName;   // Same thing but action

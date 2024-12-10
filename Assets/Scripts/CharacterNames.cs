@@ -5,5 +5,6 @@ public enum CharacterNames
     Mother,
     Father,
     Phone_Guy,
+    Seraph,
     Narrator
 }

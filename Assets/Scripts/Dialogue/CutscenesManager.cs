@@ -9,6 +9,7 @@ public class CutscenesManager : MonoBehaviour
     public DialogueEvents dialogueEvents;
     public static bool inEvent;
     public static int cutsceneNum;
+    public static int scrapPieces;
 
 
     void Awake() 
@@ -17,6 +18,7 @@ public class CutscenesManager : MonoBehaviour
         dialogueEvents = GetComponent<DialogueEvents>();
         inEvent = false;
         cutsceneNum = 0;
+        scrapPieces = 0;
     }
     void Start()
     {
@@ -90,7 +92,9 @@ public class CutscenesManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         yield return StartCoroutine(FindAnyObjectByType<RoomBrotherLeave>().RoomBroWalkToDoor());
         yield return StartCoroutine(dialogueEvents.ConvoBrother4());
+        inEvent = true;
         yield return StartCoroutine(FindAnyObjectByType<RoomBrotherLeave>().BrotherMoveOutFade());
+        yield return StartCoroutine(dialogueEvents.ConvoBrotherEnd());
     }
 
 }

@@ -16,6 +16,12 @@ public class BackgroundInteractables : MonoBehaviour
 
     public void Interact()
     {
+        if (objName == "PhotoScrap") 
+        {
+            interactablesManager.InteractScrap();
+            gameObject.GetComponent<ScrapGeneric>().scrapPickedUp();
+        }
+        
         // Main Hallway
         if (objName == "BGCouch") 
         {
@@ -52,6 +58,15 @@ public class BackgroundInteractables : MonoBehaviour
             }
         }
 
+        if (objName == "RoomLeave")
+        {
+            if (CutscenesManager.cutsceneNum >=5 && CutscenesManager.scrapPieces < 1) {
+                interactablesManager.InteractLeaveEarly();
+            } else {
+                SceneTransition.Instance.TransitionToScene("ExplorationScene");
+            }
+        }
+
         // Brother's Room
         if (objName == "BGBed") 
         {
@@ -81,13 +96,19 @@ public class BackgroundInteractables : MonoBehaviour
         {
             interactablesManager.InteractDeskBro();
         }
-        if (objName == "RoomLeave")
-        {
-            SceneTransition.Instance.TransitionToScene("ExplorationScene");
-        }
         if (objName == "BrotherInteractable")
         {
             StartCoroutine(FindAnyObjectByType<CutscenesManager>().CutsceneConvoBrother());
+        }
+
+        // Final
+        if (objName == "DoorFinal")
+        {
+            if (CutscenesManager.cutsceneNum >=5 && CutscenesManager.scrapPieces < 1) {
+                interactablesManager.InteractLeaveEarly();
+            } else {
+                SceneTransition.Instance.TransitionToScene("ExplorationScene");
+            }
         }
     }
 }

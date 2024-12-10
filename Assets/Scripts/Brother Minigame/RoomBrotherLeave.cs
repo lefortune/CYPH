@@ -10,8 +10,8 @@ public class RoomBrotherLeave : MonoBehaviour
 
     public float moveSpeed = 1f;  // Speed at which the character moves
     public float distanceRight = 5f; // Distance to move right
-    public float distanceDown = -3f;
-    public float fadeDuration = 2f;
+    public float distanceDown = -2.5f;
+    public float fadeDuration = 1f;
 
     // Start is called before the first frame update
     void Awake()

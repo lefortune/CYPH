@@ -65,6 +65,24 @@ public class InteractablesManager : MonoBehaviour
     // Below are all of the Object Interactions in the Game
     #region Object interactions
 
+    // General
+    public void InteractScrap()
+    {
+        interactableTexts.interactableLines = new List<InteractableTextLine>
+        {
+            LineBuilder("You picked up a photo scrap! I wonder what this is a part of... \nCheck your collected photo scraps by pressing \"F\"!", true)
+        };
+        StartCoroutine(InteractTextRoutine(interactableTexts));
+    }
+    public void InteractLeaveEarly()
+    {
+        interactableTexts.interactableLines = new List<InteractableTextLine>
+        {
+            LineBuilder("There's something that looks important. I should go check it first.", true)
+        };
+        StartCoroutine(InteractTextRoutine(interactableTexts));
+    }
+
     // Main Hallway
     public void InteractCouch()
     {
