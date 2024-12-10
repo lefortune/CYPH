@@ -7,13 +7,13 @@ using UnityEngine.TextCore.Text;
 public class DialogueManager : MonoBehaviour
 {
     public DialogueEvents dialogueEvents;
-    public List<DialogueCharacterManager> characters; // Reference to all characters on screen
+    public List<SpeakerManager> speakerManagerList; // Reference to all characters on screen
 
     public List<int> answerPos;
     public GameObject answerObject;
     public bool answerSelected;
 
-    private Dictionary<CharacterNames, DialogueCharacterManager> characterMap;
+    private Dictionary<CharacterNames, SpeakerManager> characterMap;
     public GameObject dialogueText;
     public GameObject dialogueBox;
     public GameObject speakerBox;
@@ -26,7 +26,7 @@ public class DialogueManager : MonoBehaviour
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
-        characterMap = new Dictionary<CharacterNames, DialogueCharacterManager>();
+        characterMap = new Dictionary<CharacterNames, SpeakerManager>();
         dynamicPanel = speakerBox.GetComponent<DynamicPanel>();
 
         speakerBox.SetActive(false);
@@ -54,31 +54,23 @@ public class DialogueManager : MonoBehaviour
 
     public IEnumerator StartDialogueEvent(DialogueEvent dialogueEvent, List<GameObject> thisEventCharacters)
     {
-        taggedSpeakers = GameObject.FindGameObjectsWithTag("Speaker");
         speakerBox.SetActive(true);
         dialogueBox.SetActive(true);
         foreach (var s in taggedSpeakers) {
             Debug.Log(s + " " + thisEventCharacters.Contains(s));
             if (thisEventCharacters.Contains(s)) {
-                s.GetComponent<DialogueCharacterManager>().Invisible(false);
-            } else {
-                s.GetComponent<DialogueCharacterManager>().Invisible(true);
+                s.GetComponent<SpeakerManager>().FadeIn();
             }
         }
 
-        characters.Clear();
+        speakerManagerList.Clear();
         foreach (var c in thisEventCharacters) {
-            DialogueCharacterManager dcManagerComponent = c.GetComponent<DialogueCharacterManager>();
-            characters.Add(dcManagerComponent);
+            SpeakerManager speakerManagerComponent = c.GetComponent<SpeakerManager>();
+            speakerManagerList.Add(speakerManagerComponent);
             
-            if (!characterMap.ContainsKey(dcManagerComponent.characterName))
+            if (!characterMap.ContainsKey(speakerManagerComponent.characterName))
             {
-                characterMap.Add(dcManagerComponent.characterName, dcManagerComponent);
-            }
-
-            if (dcManagerComponent.characterName == CharacterNames.Carrie)
-            {
-                dcManagerComponent.DoAction("fadein");
+                characterMap.Add(speakerManagerComponent.characterName, speakerManagerComponent);
             }
         }
 
@@ -87,7 +79,7 @@ public class DialogueManager : MonoBehaviour
         {
             foreach (var characterObj in thisEventCharacters)
             {
-                DialogueCharacterManager characterManager = characterObj.GetComponent<DialogueCharacterManager>();
+                SpeakerManager characterManager = characterObj.GetComponent<SpeakerManager>();
                 if (characterManager.characterName == initExpr.character)
                 {
                     characterManager.ChangeExpression(Resources.Load<Sprite>($"Expressions/{characterManager.characterName}/{initExpr.expressionName}"));
@@ -102,7 +94,7 @@ public class DialogueManager : MonoBehaviour
         dialogueBox.SetActive(false);
         speakerBox.SetActive(false);
         foreach (var s in taggedSpeakers) {
-            s.GetComponent<DialogueCharacterManager>().Invisible(true);
+            s.GetComponent<SpeakerManager>().Hide();
         }
         CutscenesManager.inEvent = false;
         Debug.Log("Finished dialogue event");
@@ -114,10 +106,17 @@ public class DialogueManager : MonoBehaviour
         while (currLineIndex < dialogueEvent.dialogueLines.Count) 
         {
             var line = dialogueEvent.dialogueLines[currLineIndex];
-            DialogueCharacterManager character = GetCharacter(line.speaker);
+            SpeakerManager character = GetCharacter(line.speaker);
             bool isNarrator = line.speaker == CharacterNames.Narrator;
             
-            SetSpeaker(line.speaker);
+            foreach (var speaker in speakerManagerList)
+            {
+                if (speaker.characterName == line.speaker)
+                    speaker.Focus();
+                else
+                    speaker.Unfocus();
+            }
+
             if (line.expressionName != "none")
             {
                 string expressionPath = $"Expressions/{line.speaker}/{line.expressionName}";
@@ -140,6 +139,9 @@ public class DialogueManager : MonoBehaviour
 
             Debug.Log("Starting line");
             isDialogueActive = true;
+
+            Debug.Log(line.speaker + ", isNarrator = " + isNarrator);
+
             dynamicPanel.UpdateUISpeaker(line.speaker, line.speakerLabel, isNarrator);
             yield return StartCoroutine(dialogueText.GetComponent<DialogueTranslator>().TypeDialogue(line.text, line.speaker, line.autoSkip));
             
@@ -149,17 +151,8 @@ public class DialogueManager : MonoBehaviour
                 currLineIndex++;
                 continue;
             }
-            yield return new WaitForSeconds(0.3f);
-
-            if (line.hasAnswer)
-            {
-                yield return StartCoroutine(ShowDialogueOptions(line.answers));
-                // currLineIndex = GetNextLineIndex(line, selectedOptionIndex);
-            }
-            else
-            {
-                yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.F) || Input.GetMouseButtonDown(0));
-            }
+            yield return new WaitForSeconds(0.2f);
+            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown(0));
 
             if (instaskip) 
             {
@@ -176,49 +169,9 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    IEnumerator ShowDialogueOptions(List<DialogueOption> options)
+    public SpeakerManager GetCharacter(CharacterNames speaker)
     {
-        Debug.Log("running");
-        foreach (int i in answerPos)
-        {
-            Instantiate(answerObject, new Vector3(i + 410, 43, 0), new Quaternion(0,0,0,0), dialogueBox.transform) ;
-        }
-        yield return new WaitUntil(() => answerSelected);
-        //UIManager.ShowOptions(options);
-
-        //bool optionSelected = false;
-        //int selectedOptionIndex = -1;
-
-        //UIManager.OnOptionSelected += (index) =>
-        //{
-        //    optionSelected = true;
-        //    selectedOptionIndex = index;
-        //};
-        //yield return new WaitUntil(() => optionSelected);
-
-        //UIManager.HideOptions();
-        //// Log the player's choice and determine the next line.
-        //int nextLineIndex = options[selectedOptionIndex].nextLineIndex;
-        //currentLineIndex = nextLineIndex;
-    }
-
-    public void SetSpeaker(CharacterNames speaker)
-    {
-        foreach (var character in characters) {
-            if (speaker == character.characterName)
-            {
-                character.SetFocused();
-            }
-            else
-            {
-                character.SetUnfocused();
-            }
-        }
-    }
-
-    public DialogueCharacterManager GetCharacter(CharacterNames speaker)
-    {
-        if (characterMap.TryGetValue(speaker, out DialogueCharacterManager character))
+        if (characterMap.TryGetValue(speaker, out SpeakerManager character))
         {
             return character;
         }

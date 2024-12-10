@@ -42,6 +42,12 @@ public class CutscenesManager : MonoBehaviour
             cutsceneNum = 3;
         }
 
+        if (!inEvent && cutsceneNum == 5 && SceneManager.GetActiveScene().name == "BrotherRoom") {
+            inEvent = true;
+            StartCoroutine(CutsceneConvoBrotherLeaving());
+            cutsceneNum = 6;
+        }
+
         // First Brother Dialog call found in BGObjectInteractable
 
         // Debug.Log(cutsceneNum + " | " + inEvent);
@@ -61,7 +67,7 @@ public class CutscenesManager : MonoBehaviour
     {
         inEvent = true;
         yield return StartCoroutine(dialogueEvents.ConvoBrother1());
-        SceneManager.LoadScene("Brother Minigame");
+        SceneTransition.Instance.TransitionToScene("Brother Minigame");
         cutsceneNum = 4;
     }
 
@@ -76,6 +82,15 @@ public class CutscenesManager : MonoBehaviour
         Debug.Log("third don");
         cutsceneNum = 5;
         SceneManager.LoadScene("BrotherRoom");
+    }
+
+    public IEnumerator CutsceneConvoBrotherLeaving()
+    {
+        inEvent = true;
+        yield return new WaitForSeconds(1f);
+        yield return StartCoroutine(FindAnyObjectByType<RoomBrotherLeave>().RoomBroWalkToDoor());
+        yield return StartCoroutine(dialogueEvents.ConvoBrother4());
+        yield return StartCoroutine(FindAnyObjectByType<RoomBrotherLeave>().BrotherMoveOutFade());
     }
 
 }

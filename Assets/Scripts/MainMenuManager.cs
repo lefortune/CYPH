@@ -22,6 +22,6 @@ public class MainMenuManager : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("ExplorationScene");
+        SceneTransition.Instance.TransitionToScene("ExplorationScene");
     }
 }

@@ -89,7 +89,7 @@ public class DialogueEvents : MonoBehaviour
             LineBuilder("Good luck! You got this! And other words of encouragement! Yeah! Ok byeeeeeeeeeeeeeeeeeeeeee!", CharacterNames.Phone_Guy, "???", expressionName:"phone_!"),
             LineBuilder("...", CharacterNames.Carrie, "Carrie", soundName:"BusySignal"),
             LineBuilder("I can't believe it! I'm finally gonna be a full fledged angel, and go to heaven!!", CharacterNames.Carrie, "Carrie", expressionName:"sparkle"),
-            LineBuilder("The door closest to you lights up. \nInteract with in-world elements using \"F\" key!", CharacterNames.Narrator, "", soundName:"BellHit"),
+            LineBuilder("The door closest to you lights up. \nInteract with in-world elements using \"E\" key!", CharacterNames.Narrator, "", soundName:"BellHit"),
             LineBuilder("Alright, Carrie... let's get to work!!", CharacterNames.Carrie, "Carrie", expressionName:"sparkle", isFinal:true),
         };
         yield return StartCoroutine(dialogueManager.StartDialogueEvent(dialogueEvent, presentCharacters));
@@ -142,7 +142,7 @@ public class DialogueEvents : MonoBehaviour
             LineBuilder("Don't need to hear that! I'm an angel and I'm here to help you! With... whatever it is you need to move on, I guess.", CharacterNames.Carrie, "Carrie"),
             LineBuilder("<i>That being said, I don't know if I really wanna help this kid...</i>", CharacterNames.Carrie, "Carrie"),
             LineBuilder("Huh? Help with what? You can't help me with anything. Just get out of my room! I want to play my games in PEACE, without the presence of a 3D woman.", CharacterNames.Brother, "Austin"),
-            LineBuilder("<i>3D, huh...</i>T", CharacterNames.Carrie, "Carrie"),
+            LineBuilder("<i>3D, huh...</i>", CharacterNames.Carrie, "Carrie"),
             LineBuilder("So, about that character you were talking about—", CharacterNames.Carrie, "Carrie"),
             LineBuilder("You mean, you mean Asuna-chan!", CharacterNames.Brother, "Austin", expressionName:"happy", actionName:"hop"),
             LineBuilder("Er... yeah. I don't know where she's from but I can tell she's from a game, based on the countless posters and figurines you have.", CharacterNames.Carrie, "Carrie"),
@@ -189,18 +189,49 @@ public class DialogueEvents : MonoBehaviour
         };
         dialogueEvent.initialExpressions = new List<InitialExpression>
         {
-            new InitialExpression { character = CharacterNames.Carrie, expressionName = "oo" },
+            new InitialExpression { character = CharacterNames.Carrie, expressionName = "worried" },
             new InitialExpression { character = CharacterNames.Brother, expressionName = "bashful" }
         };
         dialogueEvent.dialogueLines = new List<DialogueLine>
         {
             LineBuilder("...I remember... my sister, she gave this to me. She said it was supposed to be a lucky charm, to keep me safe.", CharacterNames.Brother, "Austin"),
             LineBuilder("B-but... SHE should've been the one to have it, not me. Maybe then, she would've still been alive.", CharacterNames.Brother, "Austin", expressionName:"sad", actionName:"shake"),
-            LineBuilder("Austin, look at this bracelet. Try to remember!", CharacterNames.Carrie, "Carrie"),
-            LineBuilder("I-I...", CharacterNames.Brother, "Austin", actionName:"shake"),
             LineBuilder("Austin, don't think like that. Her death was unavoidable. Things happen. But she continues to live on in you, right?", CharacterNames.Carrie, "Carrie"),
             LineBuilder("He clenches the bracelet in his hand extra tightly.", CharacterNames.Narrator, ""),
             LineBuilder("... Right... yeah, you're right. Maybe it's time I stopped running.", CharacterNames.Brother, "Austin", expressionName:"tired"),
+            LineBuilder("That's it, Austin. Take your time with it. You've been holding onto this for so long—it's okay to let yourself feel it.", CharacterNames.Carrie, "Carrie", expressionName:"happy"),
+            LineBuilder("She was the one who got me into all this. The games, the characters. She loved it all, you know?", CharacterNames.Brother, "Austin", expressionName:"normal"),
+            LineBuilder("And now, I...", CharacterNames.Brother, "Austin", expressionName:"tired"),
+            LineBuilder("...I keep playing, hoping, hoping it'll feel like she's still here playing with me, somehow.", CharacterNames.Brother, "Austin", expressionName:"sad"),
+            LineBuilder("And in a way, she is. You're carrying her memory forward.", CharacterNames.Carrie, "Carrie"),
+            LineBuilder("She would've liked that. She would've wanted me to keep going, not get stuck here.", CharacterNames.Brother, "Austin", expressionName:"tired"),
+            LineBuilder("He opens his eyes again, the pain in his face slowly giving way to a sense of peace.", CharacterNames.Narrator, ""),
+            LineBuilder("Exactly. It's okay to love these worlds, to find escape, but don't let them be a cage. Let her memory inspire you to live, not to hide.", CharacterNames.Carrie, "Carrie"),
+            LineBuilder("He looks at the bracelet one last time before slipping it on his wrist.", CharacterNames.Narrator, ""),
+            LineBuilder("Thanks, Carrie. I think... I think I can finally let it go.", CharacterNames.Brother, "Austin", expressionName:"normal"),
+            LineBuilder("The room brightens, as if a weight has been lifted. The once-dim memories around them begin to shimmer, fading peacefully.", CharacterNames.Narrator, ""),
+            LineBuilder("Anytime, Austin. Now, come on, it's time to go.", CharacterNames.Carrie, "Carrie"),
+            LineBuilder("Haha... yeah. Let's go, Carrie.", CharacterNames.Brother, "Austin", expressionName:"happy", isFinal:true),
+
+        };
+        yield return StartCoroutine(dialogueManager.StartDialogueEvent(dialogueEvent, presentCharacters));
+    }
+    public IEnumerator ConvoBrother4()
+    {
+        presentCharacters = new List<GameObject>{
+            GameObject.Find("Narrator"),
+            GameObject.Find("Brother"),
+            GameObject.Find("Carrie")
+        };
+        dialogueEvent.initialExpressions = new List<InitialExpression>
+        {
+            new InitialExpression { character = CharacterNames.Carrie, expressionName = "worried" },
+            new InitialExpression { character = CharacterNames.Brother, expressionName = "bashful" }
+        };
+        dialogueEvent.dialogueLines = new List<DialogueLine>
+        {
+            LineBuilder("Thanks, Carrie. For everything.", CharacterNames.Brother, "Austin", expressionName:"happy", isFinal:true),
+
         };
         yield return StartCoroutine(dialogueManager.StartDialogueEvent(dialogueEvent, presentCharacters));
     }

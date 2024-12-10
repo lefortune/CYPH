@@ -46,7 +46,7 @@ public class BackgroundInteractables : MonoBehaviour
             if (CutscenesManager.cutsceneNum == 1) {
                 interactablesManager.InteractDoorEarly();
             } else if (CutscenesManager.cutsceneNum == 2) {
-                SceneManager.LoadScene("BrotherRoom");
+                SceneTransition.Instance.TransitionToScene("BrotherRoom");
             } else {
                 interactablesManager.InteractDoorAfter();
             }
@@ -83,7 +83,7 @@ public class BackgroundInteractables : MonoBehaviour
         }
         if (objName == "RoomLeave")
         {
-            SceneManager.LoadScene("ExplorationScene");
+            SceneTransition.Instance.TransitionToScene("ExplorationScene");
         }
         if (objName == "BrotherInteractable")
         {
