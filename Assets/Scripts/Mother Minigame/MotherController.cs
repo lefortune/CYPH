@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class MotherController : MonoBehaviour
 {
@@ -13,12 +14,15 @@ public class MotherController : MonoBehaviour
     private float elapsedTimeTwo;
     private int turnTime;
 
+    public GameObject lineOfSight;
+
     private void Update()
     {
-
+        Debug.Log(lineOfSight.transform.rotation);
         Debug.Log(MotherRB.velocity.x > 0);
         if (MotherRB.velocity.x > 0)
         {
+            lineOfSight.transform.rotation = Quaternion.Euler(0, 0, 90);
             anim.SetBool("Left", false);
             anim.SetBool("Up", false);
             anim.SetBool("Down", false);
@@ -27,6 +31,7 @@ public class MotherController : MonoBehaviour
         }
         else if (MotherRB.velocity.x < 0)
         {
+            lineOfSight.transform.rotation = Quaternion.Euler(0, 0, -90);
             anim.SetBool("Left", true);
             anim.SetBool("Up", false);
             anim.SetBool("Down", false);
@@ -35,6 +40,7 @@ public class MotherController : MonoBehaviour
         }
         else if (MotherRB.velocity.y > 0)
         {
+            lineOfSight.transform.rotation = Quaternion.Euler(0, 0, 180);
             anim.SetBool("Left", false);
             anim.SetBool("Up", true);
             anim.SetBool("Down", false);
@@ -43,6 +49,7 @@ public class MotherController : MonoBehaviour
         }
         else if (MotherRB.velocity.y < 0)
         {
+            lineOfSight.transform.rotation = Quaternion.Euler(0, 0, 0);
             anim.SetBool("Left", false);
             anim.SetBool("Up", false);
             anim.SetBool("Down", true);
@@ -68,6 +75,7 @@ public class MotherController : MonoBehaviour
 
     private void Start()
     {
+        //lineOfSight.GetComponent<SpriteRenderer>().enabled = false;
         moving = false;
         cleaning = true;
         anim = GetComponent<Animator>();
@@ -81,6 +89,7 @@ public class MotherController : MonoBehaviour
             yield return null;
         }
         MotherRB.velocity = Vector2.zero;
+        lineOfSight.GetComponentInChildren<SpriteRenderer>().enabled = false;
         anim.SetBool("Sweep", true);
         yield return new WaitForSeconds(1);
         MotherRB.transform.rotation = new Quaternion(0, 180, 0, 0);
@@ -91,6 +100,29 @@ public class MotherController : MonoBehaviour
         yield return new WaitForSeconds(1);
         MotherRB.transform.rotation = new Quaternion(0, 0, 0, 0);
         anim.SetBool("Sweep", false);
+        lineOfSight.GetComponentInChildren<SpriteRenderer>().enabled = true;
+        lineOfSight.transform.rotation = Quaternion.Euler(0, 0, 0);
+        yield return new WaitForSeconds(3);
+        while (MotherRB.position.x < 1.5)
+        {
+            MotherRB.velocity = Vector2.right * speed;
+            yield return null;
+        }
+        MotherRB.velocity = Vector2.zero;
+        lineOfSight.transform.rotation = Quaternion.Euler(0, 0, 0);
+        yield return new WaitForSeconds(3);
+        while (MotherRB.position.x > -2)
+        {
+            MotherRB.velocity = Vector2.left * speed;
+            yield return null;
+        }
+        MotherRB.velocity = Vector2.zero;
+        while (MotherRB.position.y > -2)
+        {
+            MotherRB.velocity = Vector2.down * speed;
+            yield return null;
+        }
+        MotherRB.velocity = Vector2.zero;
 
     }
 
@@ -155,7 +187,9 @@ public class MotherController : MonoBehaviour
         {
             if (Carrie.GetComponent<Rigidbody2D>().velocity != Vector2.zero)
             {
-                Debug.Log("You Lose!");
+                Scene currentScene = SceneManager.GetActiveScene();
+
+                SceneManager.LoadScene(currentScene.name);
             }
             elapsedTime += Time.deltaTime;
             if (elapsedTime > 8)
@@ -165,6 +199,7 @@ public class MotherController : MonoBehaviour
             }
             yield return null;
         }
+
     }
 
     public IEnumerator Look()
