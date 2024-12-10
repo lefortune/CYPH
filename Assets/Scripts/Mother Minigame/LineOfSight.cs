@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class LineOfSight : MonoBehaviour
 {
@@ -19,7 +20,9 @@ public class LineOfSight : MonoBehaviour
     {
         if(collision.gameObject.GetComponent<Rigidbody2D>().velocity != Vector2.zero)
         {
-            Debug.Log("You Lose");
+            Scene currentScene = SceneManager.GetActiveScene();
+
+            SceneManager.LoadScene(currentScene.name);
         }
 
     }
