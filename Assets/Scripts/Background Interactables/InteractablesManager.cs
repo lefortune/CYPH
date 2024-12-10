@@ -102,6 +102,23 @@ public class InteractablesManager : MonoBehaviour
     {
         FindAnyObjectByType<AudioManager>().Play("Whistle");
     }
+    public void InteractDoorEarly()
+    {
+        interactableTexts.interactableLines = new List<InteractableTextLine>
+        {
+            LineBuilder("Hey! What am I doing? I need to answer the phone!", true)
+        };
+        StartCoroutine(InteractTextRoutine(interactableTexts));
+    }
+    public void InteractDoorAfter()
+    {
+        interactableTexts.interactableLines = new List<InteractableTextLine>
+        {
+            LineBuilder("Well, I saved him already, but maybe I'll go back in for old times' sake."),
+            LineBuilder("Wait, what? The room... is gone??", true)
+        };
+        StartCoroutine(InteractTextRoutine(interactableTexts));
+    }
 
     // Brother Room
     public void InteractBed()

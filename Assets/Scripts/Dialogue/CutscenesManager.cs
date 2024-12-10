@@ -20,11 +20,7 @@ public class CutscenesManager : MonoBehaviour
     }
     void Start()
     {
-        if (cutsceneNum == 0 && SceneManager.GetActiveScene().name == "ExplorationScene" && !inEvent) {
-            inEvent = true;
-            StartCoroutine(dialogueEvents.ConvoIntro1());      // ik this doesnt wait for the coroutine but, "if it works..."
-            cutsceneNum = 1;
-        }
+        
     }
 
     // Update is called once per frame
@@ -32,6 +28,12 @@ public class CutscenesManager : MonoBehaviour
     {
         if (dialogueEvents == null) {
             dialogueEvents = GetComponent<DialogueEvents>();
+        }
+
+        if (cutsceneNum == 0 && SceneManager.GetActiveScene().name == "ExplorationScene" && !inEvent) {
+            inEvent = true;
+            cutsceneNum = 1;
+            StartCoroutine(dialogueEvents.ConvoIntro1());      // ik this doesnt wait for the coroutine but, "if it works..."
         }
 
         if (!inEvent && cutsceneNum == 2 && SceneManager.GetActiveScene().name == "BrotherRoom") {
@@ -67,7 +69,13 @@ public class CutscenesManager : MonoBehaviour
     {
         inEvent = true;
         yield return StartCoroutine(dialogueEvents.ConvoBrother2());
+        Debug.Log("first don");
+        yield return StartCoroutine(FindAnyObjectByType<AsunaBackgroundFade>().TransitionToBlack());
+        Debug.Log("second don");
+        yield return StartCoroutine(dialogueEvents.ConvoBrother3());
+        Debug.Log("third don");
         cutsceneNum = 5;
+        SceneManager.LoadScene("BrotherRoom");
     }
 
 }

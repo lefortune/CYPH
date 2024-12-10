@@ -218,7 +218,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &18246525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -700,8 +700,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Jonkler
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 73f7987b6405848cea252b065353feb3, type: 2}
+  m_sharedMaterial: {fileID: -6132418131951241562, guid: 73f7987b6405848cea252b065353feb3, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1184,8 +1184,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Those who touch themselves:'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 73f7987b6405848cea252b065353feb3, type: 2}
+  m_sharedMaterial: {fileID: -6132418131951241562, guid: 73f7987b6405848cea252b065353feb3, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1571,7 +1571,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &937020486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1680,7 +1680,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3f8d6b5f457954431acede29cd63c92a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2935869788eeb452db882a0d3f206660, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1700,8 +1700,8 @@ Transform:
   m_GameObject: {fileID: 969504691}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: -1}
-  m_LocalScale: {x: 0.5, y: 0.2, z: 1}
+  m_LocalPosition: {x: 5, y: 0, z: -1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1718,14 +1718,13 @@ GameObject:
   - component: {fileID: 988659683}
   - component: {fileID: 988659682}
   - component: {fileID: 988659681}
-  - component: {fileID: 988659684}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &988659680
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1809,18 +1808,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &988659684
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 988659679}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3759292e3cfc2432aa43aa072ec5fc86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1049337929
 GameObject:
   m_ObjectHideFlags: 0
@@ -1922,13 +1909,14 @@ GameObject:
   - component: {fileID: 1127213084}
   - component: {fileID: 1127213086}
   - component: {fileID: 1127213085}
+  - component: {fileID: 1127213087}
   m_Layer: 5
   m_Name: DialogueBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1127213084
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1989,6 +1977,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1127213083}
   m_CullTransparentMesh: 1
+--- !u!114 &1127213087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127213083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3759292e3cfc2432aa43aa072ec5fc86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1546931879 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8469716951523520199, guid: cb7c58905ce7646fb94dc554f2f7b577, type: 3}

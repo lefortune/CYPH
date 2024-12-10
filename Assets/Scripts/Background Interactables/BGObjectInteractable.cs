@@ -43,8 +43,13 @@ public class BackgroundInteractables : MonoBehaviour
         }
         if (objName == "Door1")
         {
-            CutscenesManager.cutsceneNum = 2;
-            SceneManager.LoadScene("BrotherRoom");
+            if (CutscenesManager.cutsceneNum == 1) {
+                interactablesManager.InteractDoorEarly();
+            } else if (CutscenesManager.cutsceneNum == 2) {
+                SceneManager.LoadScene("BrotherRoom");
+            } else {
+                interactablesManager.InteractDoorAfter();
+            }
         }
 
         // Brother's Room
@@ -75,6 +80,10 @@ public class BackgroundInteractables : MonoBehaviour
         if (objName == "BGDeskBro") 
         {
             interactablesManager.InteractDeskBro();
+        }
+        if (objName == "RoomLeave")
+        {
+            SceneManager.LoadScene("ExplorationScene");
         }
         if (objName == "BrotherInteractable")
         {

@@ -50,6 +50,7 @@ public class CarrierBrotherController : MonoBehaviour
     #region levelVariable
     int level;
     public List<float> levelEnds = new List<float>();
+    bool isDone;
     #endregion
 
     #region Unity_functions
@@ -57,6 +58,7 @@ public class CarrierBrotherController : MonoBehaviour
         PlayerRB = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         FloorLayer = LayerMask.NameToLayer("Floor");
+        isDone = false;
     }
 
     private void Update() {
@@ -165,9 +167,10 @@ public class CarrierBrotherController : MonoBehaviour
             touchingGround = true;
         }
 
-        if (coll.gameObject.CompareTag("Brother"))
+        if (coll.gameObject.CompareTag("Brother") && isDone == false)
         {
             EndGame();
+            isDone = true;
         }
 
         if (coll.gameObject.CompareTag("Death"))

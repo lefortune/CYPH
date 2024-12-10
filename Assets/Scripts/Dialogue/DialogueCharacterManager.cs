@@ -99,7 +99,7 @@ public class DialogueCharacterManager : MonoBehaviour
         }
         else if (action.Contains("fadein")) 
         {
-            StartCoroutine(FadeCoroutine(-2f, 0f, true));
+            StartCoroutine(FadeCoroutine(-7f, -5f, true));
         }
         //  Handle other actions (oscillation, animation) if u want
         else {

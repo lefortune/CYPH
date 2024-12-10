@@ -6,15 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: e33ac7f219bd6475fb8f2091fdae74c9
+  - enabled: 1
     path: Assets/Scenes/ExplorationScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/ConvoScene.unity
-    guid: de972d412c13549e1a5908f6c4dc2e54
+    path: Assets/Scenes/BrotherRoom.unity
+    guid: e8ac3782e6c374f22ab6039842857a09
   - enabled: 1
     path: Assets/Scenes/Brother Minigame.unity
     guid: 27474fd4622db46f08a2c5bbd19e32a4
   - enabled: 1
-    path: Assets/Scenes/BrotherRoom.unity
-    guid: e8ac3782e6c374f22ab6039842857a09
+    path: Assets/Scenes/ConvoScene.unity
+    guid: de972d412c13549e1a5908f6c4dc2e54
   m_configObjects: {}
