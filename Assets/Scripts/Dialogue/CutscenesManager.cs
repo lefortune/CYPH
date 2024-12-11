@@ -77,7 +77,12 @@ public class CutscenesManager : MonoBehaviour
             cutsceneNum = 16;
         }
 
-        if (!inEvent && cutsceneNum < 99 && SceneManager.GetActiveScene().name == "FinalScene") {
+        if (!inEvent && cutsceneNum < 16 && SceneManager.GetActiveScene().name == "FinalScene") {
+            inEvent = true;
+            StartCoroutine(CutsceneFinalSecret());
+        }
+
+        if (!inEvent && cutsceneNum < 99 && cutsceneNum >= 16 && SceneManager.GetActiveScene().name == "FinalScene") {
             inEvent = true;
             StartCoroutine(CutsceneFinal());
             cutsceneNum = 99;
@@ -210,6 +215,14 @@ public class CutscenesManager : MonoBehaviour
         yield return StartCoroutine(dialogueEvents.ConvoFinal5());
         yield return new WaitForSeconds(1f);
         FindAnyObjectByType<FadeInImage>().FadeIn();
+    }
+
+    public IEnumerator CutsceneFinalSecret()
+    {
+        inEvent = true;
+        yield return StartCoroutine(dialogueEvents.ConvoSecretEnding());
+        SceneTransition.Instance.TransitionToScene("ExplorationScene");
+
     }
 
 

@@ -169,11 +169,7 @@ public class BackgroundInteractables : MonoBehaviour
         // Final
         if (objName == "DoorFinal")
         {
-            if (CutscenesManager.cutsceneNum >=5 && CutscenesManager.scrapPieces < 1) {
-                interactablesManager.InteractLeaveEarly();
-            } else {
-                SceneTransition.Instance.TransitionToScene("ExplorationScene");
-            }
+            SceneTransition.Instance.TransitionToScene("FinalScene");
         }
     }
 }
