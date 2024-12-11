@@ -31,7 +31,7 @@ public class DialogueTranslator : MonoBehaviour
                 {
                     FindObjectOfType<AudioManager>().Play("DialogueTyping");
                 }
-                if (speaker == CharacterNames.Seraph) 
+                if (speaker == CharacterNames.Seraph || speaker == CharacterNames.Phone_Guy) 
                 {
                     FindObjectOfType<AudioManager>().PlayOneShot("SeraphDialogueTyping");
                 }
