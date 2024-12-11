@@ -221,8 +221,9 @@ public class CutscenesManager : MonoBehaviour
     {
         inEvent = true;
         yield return StartCoroutine(dialogueEvents.ConvoSecretEnding());
-        SceneTransition.Instance.TransitionToScene("ExplorationScene");
-
+        inEvent = true;
+        SceneManager.LoadScene("ExplorationScene");
+        inEvent = false;
     }
 
 
