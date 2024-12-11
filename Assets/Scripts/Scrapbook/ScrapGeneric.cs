@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ScrapGeneric : MonoBehaviour
 {
@@ -20,7 +21,17 @@ public class ScrapGeneric : MonoBehaviour
         // Get the Renderer component from the object
         objRenderer = GetComponent<SpriteRenderer>();
 
-        if (CutscenesManager.cutsceneNum < 5)
+        if (CutscenesManager.cutsceneNum < 5 && SceneManager.GetActiveScene().name == "BrotherRoom")
+        {
+            gameObject.SetActive(false);
+        }
+
+        if (CutscenesManager.cutsceneNum < 9 && SceneManager.GetActiveScene().name == "MotherRoom")
+        {
+            gameObject.SetActive(false);
+        }
+
+        if (CutscenesManager.cutsceneNum < 14 && SceneManager.GetActiveScene().name == "FatherRoom")
         {
             gameObject.SetActive(false);
         }
@@ -57,6 +68,7 @@ public class ScrapGeneric : MonoBehaviour
     {
         FindObjectOfType<AudioManager>().Play("ScrapObtain");
         CutscenesManager.scrapPieces ++;
+        Debug.Log(CutscenesManager.scrapPieces);
         Destroy(gameObject);
     }
 }

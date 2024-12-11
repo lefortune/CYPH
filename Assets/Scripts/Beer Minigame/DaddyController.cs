@@ -7,6 +7,7 @@ public class DaddyController : MonoBehaviour
     public float delay;
     private float elapsedTime;
     Animator anim;
+    public static bool embraced;
 
     private void Awake()
     {
@@ -15,7 +16,7 @@ public class DaddyController : MonoBehaviour
 
     void Start()
     {
-        
+        embraced = false;
     }
 
     // Update is called once per frame
@@ -33,8 +34,18 @@ public class DaddyController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("You Won!");
+            Debug.Log("You Win");
+            embraced = true;
+            StartCoroutine(FindAnyObjectByType<CutscenesManager>().CutsceneConvoFatherCaught());
+            this.enabled = false;
         }
+    }
+
+    public void TryThisInsteadSinceCollisionSucks() {
+        Debug.Log("You Win");
+        embraced = true;
+        StartCoroutine(FindAnyObjectByType<CutscenesManager>().CutsceneConvoFatherCaught());
+        this.enabled = false;
     }
 
 }

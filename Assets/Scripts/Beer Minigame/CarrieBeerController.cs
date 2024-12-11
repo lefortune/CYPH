@@ -37,6 +37,11 @@ public class CarrierBeerController : MonoBehaviour
     }
     
     private void Update() {
+        if (DaddyController.embraced)
+        {
+            return;
+        }
+
         x_input = Input.GetAxisRaw("Horizontal");
         y_input = Input.GetAxisRaw("Vertical");
 
@@ -46,6 +51,10 @@ public class CarrierBeerController : MonoBehaviour
             isSprint = false;
         }
         Move();
+
+        if (Input.GetKeyDown(KeyCode.E)) {
+            Embrace();
+        }
     }
     #endregion
 
@@ -71,7 +80,7 @@ public class CarrierBeerController : MonoBehaviour
         Vector2 movement = new Vector2(x_input, y_input) * moveSpeed;
         PlayerRB.velocity = movement;
         if (isSprint) {
-            PlayerRB.velocity *= 2;
+            PlayerRB.velocity *= 1.5f;
         }
 
 
@@ -121,6 +130,26 @@ public class CarrierBeerController : MonoBehaviour
         anim.SetFloat("DirX", currDirection.x);
         anim.SetFloat("DirY", currDirection.y);
 
+    }
+
+    private void Embrace() 
+    {
+        Vector2 colliderCenter = PlayerRB.position;
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(
+            colliderCenter + currDirection / 2f,
+            new Vector2(1.5f, 1.5f),
+            0f,
+            Vector2.zero,
+            0f
+        );
+
+        foreach (RaycastHit2D hit in hits)
+        {
+            if (hit.transform.CompareTag("Interactable"))
+            {
+                FindAnyObjectByType<DaddyController>().TryThisInsteadSinceCollisionSucks();
+            }
+        }
     }
     #endregion
 }

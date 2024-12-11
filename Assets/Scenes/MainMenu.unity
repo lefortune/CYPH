@@ -281,7 +281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5018afe731c2422789a4909cb967fdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterName: 4
+  characterName: 5
   characterImage: {fileID: 0}
   rectTransform: {fileID: 0}
   fadeDuration: 0.3
@@ -533,7 +533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5018afe731c2422789a4909cb967fdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterName: 5
+  characterName: 6
   characterImage: {fileID: 0}
   rectTransform: {fileID: 0}
   fadeDuration: 0.3
@@ -1464,7 +1464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5018afe731c2422789a4909cb967fdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterName: 4
+  characterName: 2
   characterImage: {fileID: 0}
   rectTransform: {fileID: 0}
   fadeDuration: 0.3
@@ -2342,7 +2342,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -250, y: 50}
+  m_AnchoredPosition: {x: -250, y: 40}
   m_SizeDelta: {x: 575, y: 350}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1442310503
@@ -2357,7 +2357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5018afe731c2422789a4909cb967fdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterName: 4
+  characterName: 3
   characterImage: {fileID: 0}
   rectTransform: {fileID: 0}
   fadeDuration: 0.3
@@ -2758,6 +2758,10 @@ MonoBehaviour:
   - name: PaperOpen
     group: 
     clip: {fileID: 8300000, guid: b068d0fb97cea4491ac64c66bb8a3ec3, type: 3}
+    source: {fileID: 0}
+  - name: SeraphDialogueTyping
+    group: 
+    clip: {fileID: 8300000, guid: ccc0b01714d5b43c6996223879904c42, type: 3}
     source: {fileID: 0}
   musicGroup: {fileID: 243998503013657228, guid: d58233c12057546cb916864e0322e752, type: 2}
   sfxGroup: {fileID: 243729444503017978, guid: d58233c12057546cb916864e0322e752, type: 2}

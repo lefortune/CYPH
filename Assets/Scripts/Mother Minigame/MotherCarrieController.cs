@@ -49,7 +49,7 @@ public class MotherCarrieController : MonoBehaviour
             isSprint = false;
         }
         Move();
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             Interact();
         }
@@ -121,7 +121,8 @@ public class MotherCarrieController : MonoBehaviour
                 float distance = Vector2.Distance(colliderCenter + currDirection / 2, hit.point);
                 if (distance < 1.5f)
                 {
-                    Debug.Log("You Win");
+                    StartCoroutine(FindAnyObjectByType<CutscenesManager>().CutsceneConvoMotherCaught());
+                    this.enabled = false;
                 }
             }
         }

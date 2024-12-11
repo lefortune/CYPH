@@ -120,7 +120,7 @@ public class InteractablesManager : MonoBehaviour
     {
         FindAnyObjectByType<AudioManager>().Play("Whistle");
     }
-    public void InteractDoorEarly()
+    public void InteractBroDoorEarly()
     {
         interactableTexts.interactableLines = new List<InteractableTextLine>
         {
@@ -128,11 +128,19 @@ public class InteractablesManager : MonoBehaviour
         };
         StartCoroutine(InteractTextRoutine(interactableTexts));
     }
+    public void InteractDoorEarly()
+    {
+        interactableTexts.interactableLines = new List<InteractableTextLine>
+        {
+            LineBuilder("I better help the door on the left first—keep things organized!", true)
+        };
+        StartCoroutine(InteractTextRoutine(interactableTexts));
+    }
     public void InteractDoorAfter()
     {
         interactableTexts.interactableLines = new List<InteractableTextLine>
         {
-            LineBuilder("Well, I saved him already, but maybe I'll go back in for old times' sake."),
+            LineBuilder("Well, I saved them already, but maybe I'll go back in for old times' sake."),
             LineBuilder("Wait, what? The room... is gone??", true)
         };
         StartCoroutine(InteractTextRoutine(interactableTexts));
@@ -194,6 +202,68 @@ public class InteractablesManager : MonoBehaviour
         interactableTexts.interactableLines = new List<InteractableTextLine>
         {
             LineBuilder("Quite the setup he's got going on here! \nHey, this object tucked away on the left... looks really familiar for some reason?", true)
+        };
+        StartCoroutine(InteractTextRoutine(interactableTexts));
+    }
+
+    // Mother Room
+    public void InteractIsland()
+    {
+        interactableTexts.interactableLines = new List<InteractableTextLine>
+        {
+            LineBuilder("That's a cool island! Kitchen islands are awesome.", true)
+        };
+        StartCoroutine(InteractTextRoutine(interactableTexts));
+    }
+    public void InteractMiniWindow()
+    {
+        interactableTexts.interactableLines = new List<InteractableTextLine>
+        {
+            LineBuilder("You can't see anything out the window! Must be cause we're still in limbo.", true)
+        };
+        StartCoroutine(InteractTextRoutine(interactableTexts));
+    }
+    public void InteractFridge()
+    {
+        interactableTexts.interactableLines = new List<InteractableTextLine>
+        {
+            LineBuilder("No alcohol in the fridge, surprisingly!"),
+            LineBuilder("Unless someone else already took it all...", true)
+        };
+        StartCoroutine(InteractTextRoutine(interactableTexts));
+    }
+
+    // Father Room
+    public void InteractClock()
+    {
+        interactableTexts.interactableLines = new List<InteractableTextLine>
+        {
+            LineBuilder("The hands aren't moving. They're stuck on 3:53.", true)
+        };
+        StartCoroutine(InteractTextRoutine(interactableTexts));
+    }
+    public void InteractCouchDad()
+    {
+        interactableTexts.interactableLines = new List<InteractableTextLine>
+        {
+            LineBuilder("Well, I'd certainly take Austin's couch over this thing.", true)
+        };
+        StartCoroutine(InteractTextRoutine(interactableTexts));
+    }
+    public void InteractGarbage()
+    {
+        interactableTexts.interactableLines = new List<InteractableTextLine>
+        {
+            LineBuilder("The bags are all filled with... Food! Thank Goodness."),
+            LineBuilder("They surprisingly dont stink... The perks of being in purgatory, I guess.", true)
+        };
+        StartCoroutine(InteractTextRoutine(interactableTexts));
+    }
+    public void InteractBottles()
+    {
+        interactableTexts.interactableLines = new List<InteractableTextLine>
+        {
+            LineBuilder("Geez... how can a person drink this much alcohol? The bottles are all empty!", true)
         };
         StartCoroutine(InteractTextRoutine(interactableTexts));
     }

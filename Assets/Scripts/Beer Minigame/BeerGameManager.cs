@@ -26,6 +26,11 @@ public class BeerGameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (DaddyController.embraced)
+        {
+            return;
+        }
+        
         if (beerToggle)
         {
             if (beerTimer <= 0)

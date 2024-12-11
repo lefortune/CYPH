@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RoomBrotherLeave : MonoBehaviour
 {
@@ -19,10 +20,13 @@ public class RoomBrotherLeave : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        if (CutscenesManager.cutsceneNum == 5) {
-            gameObject.SetActive(true);
-        } else {
-            gameObject.SetActive(false);
+        if (SceneManager.GetActiveScene().name == "BrotherRoom" )
+        {
+            if (CutscenesManager.cutsceneNum == 5) {
+                gameObject.SetActive(true);
+            } else  {
+                gameObject.SetActive(false);
+            }
         }
     }
 
@@ -82,6 +86,11 @@ public class RoomBrotherLeave : MonoBehaviour
         
         // You can optionally destroy or deactivate the character here if needed:
         Destroy(gameObject); // Or use SetActive(false);
+    }
+
+    public void LiterallyJustGone()
+    {
+        Destroy(gameObject);
     }
 
 }

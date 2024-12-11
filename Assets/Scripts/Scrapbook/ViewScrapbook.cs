@@ -7,6 +7,8 @@ public class ViewScrapbook : MonoBehaviour
     // Reference to the Canvas component
     private Canvas canvas;
     public static bool isScrapbookOpen;
+    ScrapPieceShow[] scrapPieces;
+    private bool disableKey;
 
     private void Awake()
     {
@@ -17,7 +19,9 @@ public class ViewScrapbook : MonoBehaviour
     {
         // Get the Canvas component attached to this GameObject
         canvas = GetComponent<Canvas>();
+        scrapPieces = GetComponentsInChildren<ScrapPieceShow>();
 
+        disableKey = false;
         // Initially hide the Canvas
         if (canvas != null)
         {
@@ -29,7 +33,7 @@ public class ViewScrapbook : MonoBehaviour
     private void Update()
     {
         // Check if the F key is pressed
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && !disableKey)
         {
             // Toggle the enabled state of the Canvas
             if (canvas != null)
@@ -38,16 +42,24 @@ public class ViewScrapbook : MonoBehaviour
                 isScrapbookOpen = !isScrapbookOpen;
             }
 
-            if (canvas.enabled)
-            {
-                ScrapPieceShow[] scrapPieces = GetComponentsInChildren<ScrapPieceShow>();
-                foreach (ScrapPieceShow scrapPiece in scrapPieces)
-                {
-                    // Toggle the visibility based on the name of the GameObject
-                    scrapPiece.ToggleVisibilityBasedOnName();
-                }
-                FindObjectOfType<AudioManager>().Play("PaperOpen");
-            }
         }
+
+        if (canvas.enabled)
+        {
+            foreach (ScrapPieceShow scrapPiece in scrapPieces)
+            {
+                // Toggle the visibility based on the name of the GameObject
+                scrapPiece.ToggleVisibilityBasedOnName();
+            }
+            FindObjectOfType<AudioManager>().Play("PaperOpen");
+        }
+    }
+
+    public IEnumerator ShowBook() {
+        disableKey = true;
+        canvas.enabled = true;
+        yield return new WaitForSeconds(3f);
+        canvas.enabled = false;
+        disableKey = false;
     }
 }

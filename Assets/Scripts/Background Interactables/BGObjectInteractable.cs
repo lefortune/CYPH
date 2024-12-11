@@ -47,12 +47,33 @@ public class BackgroundInteractables : MonoBehaviour
                 interactablesManager.InteractPhone();
             }
         }
+
         if (objName == "Door1")
         {
-            if (CutscenesManager.cutsceneNum == 1) {
-                interactablesManager.InteractDoorEarly();
-            } else if (CutscenesManager.cutsceneNum == 2) {
+            if (CutscenesManager.cutsceneNum < 2) {
+                interactablesManager.InteractBroDoorEarly();
+            } else if (CutscenesManager.cutsceneNum >= 2 && CutscenesManager.scrapPieces < 1) {
                 SceneTransition.Instance.TransitionToScene("BrotherRoom");
+            } else {
+                interactablesManager.InteractDoorAfter();
+            }
+        }
+        if (objName == "Door2")
+        {
+            if (CutscenesManager.cutsceneNum < 6) {
+                interactablesManager.InteractDoorEarly();
+            } else if (CutscenesManager.cutsceneNum >= 6 && CutscenesManager.scrapPieces < 2) {
+                SceneTransition.Instance.TransitionToScene("MotherRoom");
+            } else {
+                interactablesManager.InteractDoorAfter();
+            }
+        }
+        if (objName == "Door3")
+        {
+            if (CutscenesManager.cutsceneNum < 10) {
+                interactablesManager.InteractDoorEarly();
+            } else if (CutscenesManager.cutsceneNum >= 10 && CutscenesManager.scrapPieces < 3) {
+                StartCoroutine(FindAnyObjectByType<CutscenesManager>().CutsceneEnterDadBefore());
             } else {
                 interactablesManager.InteractDoorAfter();
             }
@@ -60,7 +81,11 @@ public class BackgroundInteractables : MonoBehaviour
 
         if (objName == "RoomLeave")
         {
-            if (CutscenesManager.cutsceneNum >=5 && CutscenesManager.scrapPieces < 1) {
+            if (CutscenesManager.cutsceneNum >= 6 && CutscenesManager.scrapPieces < 1 && SceneManager.GetActiveScene().name == "BrotherRoom") {
+                interactablesManager.InteractLeaveEarly();
+            } else if (CutscenesManager.cutsceneNum >= 10 && CutscenesManager.scrapPieces < 2 && SceneManager.GetActiveScene().name == "MotherRoom") {
+                interactablesManager.InteractLeaveEarly();
+            } else if (CutscenesManager.cutsceneNum >= 15 && CutscenesManager.scrapPieces < 3 && SceneManager.GetActiveScene().name == "FatherRoom") {
                 interactablesManager.InteractLeaveEarly();
             } else {
                 SceneTransition.Instance.TransitionToScene("ExplorationScene");
@@ -99,6 +124,46 @@ public class BackgroundInteractables : MonoBehaviour
         if (objName == "BrotherInteractable")
         {
             StartCoroutine(FindAnyObjectByType<CutscenesManager>().CutsceneConvoBrother());
+        }
+
+        // Mother
+        if (objName == "BGIsland") 
+        {
+            interactablesManager.InteractIsland();
+        }
+        if (objName == "BGMiniWindow") 
+        {
+            interactablesManager.InteractMiniWindow();
+        }
+        if (objName == "BGFridge") 
+        {
+            interactablesManager.InteractFridge();
+        }
+        if (objName == "MotherInteractable")
+        {
+            StartCoroutine(FindAnyObjectByType<CutscenesManager>().CutsceneConvoMother());
+        }
+
+        // Father
+        if (objName == "BGClock") 
+        {
+            interactablesManager.InteractClock();
+        }
+        if (objName == "BGCouchDad") 
+        {
+            interactablesManager.InteractCouchDad();
+        }
+        if (objName == "BGGarbage") 
+        {
+            interactablesManager.InteractGarbage();
+        }
+        if (objName == "BGBottles") 
+        {
+            interactablesManager.InteractBottles();
+        }
+        if (objName == "FatherInteractable")
+        {
+            StartCoroutine(FindAnyObjectByType<CutscenesManager>().CutsceneConvoFather());
         }
 
         // Final

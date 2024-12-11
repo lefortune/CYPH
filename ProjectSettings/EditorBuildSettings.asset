@@ -18,6 +18,18 @@ EditorBuildSettings:
     path: Assets/Scenes/Brother Minigame.unity
     guid: 27474fd4622db46f08a2c5bbd19e32a4
   - enabled: 1
-    path: Assets/Scenes/ConvoScene.unity
-    guid: de972d412c13549e1a5908f6c4dc2e54
+    path: Assets/Scenes/MotherRoom.unity
+    guid: a4bbf8582a1914f3eabb98f0f80078c2
+  - enabled: 1
+    path: Assets/Scenes/Mother Minigame.unity
+    guid: 2a2282cc117d842d9bfa3a97860e96fb
+  - enabled: 1
+    path: Assets/Scenes/FatherRoom.unity
+    guid: c6559f78d2ae741af8329f73242936e4
+  - enabled: 1
+    path: Assets/Scenes/Dad Minigame.unity
+    guid: 8828d35625486465aa8048d6e216b9fe
+  - enabled: 1
+    path: Assets/Scenes/FinalScene.unity
+    guid: af99eed2eb4d144719d395893ef6a15b
   m_configObjects: {}
