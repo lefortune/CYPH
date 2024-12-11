@@ -103,14 +103,24 @@ public class MotherController : MonoBehaviour
         lineOfSight.GetComponentInChildren<SpriteRenderer>().enabled = true;
         lineOfSight.transform.rotation = Quaternion.Euler(0, 0, 0);
         yield return new WaitForSeconds(3);
-        while (MotherRB.position.x < 1.5)
+        while (MotherRB.position.x < 3.5)
         {
             MotherRB.velocity = Vector2.right * speed;
             yield return null;
         }
         MotherRB.velocity = Vector2.zero;
+        while (MotherRB.position.y < 1.5)
+        {
+            MotherRB.velocity = Vector2.up * speed;
+            yield return null;
+        }
+        MotherRB.velocity = Vector2.zero;
         lineOfSight.transform.rotation = Quaternion.Euler(0, 0, 0);
+        lineOfSight.GetComponentInChildren<SpriteRenderer>().enabled = false;
+        anim.SetBool("Wipe", true);
         yield return new WaitForSeconds(3);
+        anim.SetBool("Wipe", false);
+        lineOfSight.GetComponentInChildren<SpriteRenderer>().enabled = true;
         while (MotherRB.position.x > -2)
         {
             MotherRB.velocity = Vector2.left * speed;
@@ -123,7 +133,34 @@ public class MotherController : MonoBehaviour
             yield return null;
         }
         MotherRB.velocity = Vector2.zero;
-
+        yield return new WaitForSeconds(3);
+        while (MotherRB.position.x < 3.5)
+        {
+            MotherRB.velocity = Vector2.right * speed;
+            yield return null;
+        }
+        MotherRB.velocity = Vector2.zero;
+        lineOfSight.GetComponentInChildren<SpriteRenderer>().enabled = false;
+        anim.SetBool("Sweep", true);
+        yield return new WaitForSeconds(1);
+        MotherRB.transform.rotation = new Quaternion(0, 180, 0, 0);
+        yield return new WaitForSeconds(1);
+        MotherRB.transform.rotation = new Quaternion(0, 0, 0, 0);
+        yield return new WaitForSeconds(1);
+        MotherRB.transform.rotation = new Quaternion(0, 180, 0, 0);
+        yield return new WaitForSeconds(1);
+        MotherRB.transform.rotation = new Quaternion(0, 0, 0, 0);
+        anim.SetBool("Sweep", false);
+        lineOfSight.GetComponentInChildren<SpriteRenderer>().enabled = true;
+        while (MotherRB.position.y < 1.5)
+        {
+            MotherRB.velocity = Vector2.up * speed;
+            yield return null;
+        }
+        MotherRB.velocity = Vector2.zero;
+        MotherRB.transform.rotation = new Quaternion(0, 0, 0, 0);
+        yield return new WaitForSeconds(3);
+        StartCoroutine(Sweep());
     }
 
     //public IEnumerator CleaningLoop()
